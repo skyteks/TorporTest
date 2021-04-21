@@ -13,6 +13,10 @@ namespace UnityEngine.UI
 
         public Image background;
 
+        public GameObject[] objectsToToggle;
+
+        [Space]
+
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
@@ -39,12 +43,25 @@ namespace UnityEngine.UI
 
         public void Select()
         {
+            Toggle(true);
             onTabSelected?.Invoke();
         }
 
         public void Deselect()
         {
+            Toggle(false);
             onTabDeselected?.Invoke();
+        }
+
+        private void Toggle(bool toggle)
+        {
+            for (int i = 0; i < objectsToToggle.Length; i++)
+            {
+                if (objectsToToggle[i] != null)
+                {
+                    objectsToToggle[i].SetActive(toggle);
+                }
+            }
         }
     }
 }

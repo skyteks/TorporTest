@@ -48,7 +48,7 @@ public static class SaveManager
 
         string json = File.ReadAllText(path);
 
-        SaveData data = JsonHelper.FromJson<SaveData>(json)[0];
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
         return data;
     }
 }

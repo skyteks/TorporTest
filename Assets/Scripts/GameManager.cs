@@ -56,8 +56,8 @@ public class GameManager : MonoBehaviour
         SaveData.Codex.Topic.Entry.Content content1A11 = new SaveData.Codex.Topic.Entry.Content("Paskal Beniwoll", null, "");
 
 
-        SaveData.Codex.Topic.Entry entry1A = new SaveData.Codex.Topic.Entry(
-            "Cabinet", content1A1, content1A2, content1A3, content1A4, content1A5, content1A6, content1A7, content1A8, content1A9, content1A10, content1A11);
+        SaveData.Codex.Topic.Entry entry1A = new SaveData.Codex.Topic.Entry("Cabinet",
+            content1A1, content1A2, content1A3, content1A4, content1A5, content1A6, content1A7, content1A8, content1A9, content1A10, content1A11);
 
         SaveData.Codex.Topic.Entry entry1B = new SaveData.Codex.Topic.Entry("Family");
         SaveData.Codex.Topic.Entry entry1C = new SaveData.Codex.Topic.Entry("Party Leaders");
