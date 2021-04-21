@@ -118,6 +118,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    maxJobWorkers: 0
+    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -203,4 +205,104 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &923419750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 923419752}
+  - component: {fileID: 923419751}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &923419751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923419750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc6e2fa09a9f9e4c93ab59e88e56232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    codex:
+      topics:
+      - name: Characters
+        entries:
+        - name: Cabinet
+          contents:
+          - title: Petr Vectern
+            image: {fileID: 0}
+            text: "Greater Holsord is the largest region of \nSordland, bordering
+              the regions of Nargis.\nGeisland, Bergia and Lorren, as well as the\ncountry
+              of Lespia. The region is governed from\nthe capital of Sordland, Holsord.
+              It is the most\npopulous region of Sordlands's seven regions\n"
+          - title: Petr Vectern
+            image: {fileID: 0}
+            text: 
+          - title: Lucian Galade
+            image: {fileID: 0}
+            text: 
+          - title: Lileas Graf
+            image: {fileID: 0}
+            text: 
+          - title: Symon Holl
+            image: {fileID: 0}
+            text: 
+          - title: Iosef Lancea
+            image: {fileID: 0}
+            text: 
+          - title: Deivid Wisci
+            image: {fileID: 0}
+            text: 
+          - title: Nia Morgna
+            image: {fileID: 0}
+            text: 
+          - title: Gus Manger
+            image: {fileID: 0}
+            text: 
+          - title: Ciara Walda
+            image: {fileID: 0}
+            text: 
+          - title: Paskal Beniwoll
+            image: {fileID: 0}
+            text: 
+        - name: Family
+          contents: []
+        - name: Party Leaders
+          contents: []
+        - name: The Assembly
+          contents: []
+        - name: The Supreme Court
+          contents: []
+      - name: Locations
+        entries: []
+      - name: Organisations
+        entries: []
+      - name: History
+        entries: []
+--- !u!4 &923419752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923419750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
