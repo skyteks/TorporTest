@@ -67,7 +67,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 2b51915eaf0471e49aa3a791a9d56961, type: 3}
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
@@ -191,26 +191,14 @@ MonoBehaviour:
   background: {fileID: 3495800364500146592}
   objectsToToggle:
   - {fileID: 0}
-  transitionTextColor: 0
+  transitionTextColor: 1
   spriteNormal: {fileID: 0}
   spriteSelected: {fileID: 0}
-  colorNormal: {r: 1, g: 1, b: 1, a: 1}
-  colorSelected: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+  colorNormal: {r: 0.8588236, g: 0.8196079, b: 0.70980394, a: 1}
+  colorSelected: {r: 0.9137255, g: 0.8352941, b: 0.59607846, a: 1}
   onTabSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonEffect, Assembly-CSharp
-        m_MethodName: Select
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3495800363184490000}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
@@ -223,13 +211,25 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 3495800363184489996}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_font
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 12800000, guid: ab70b034cfa329943aa387fecb786ae7, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Font, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
   onTabDeselected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonEffect, Assembly-CSharp
-        m_MethodName: Deselect
-        m_Mode: 1
+      - m_Target: {fileID: 3495800363184490000}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -238,13 +238,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3495800363184490000}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
+      - m_Target: {fileID: 3495800363184489996}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Text, UnityEngine.UI
+        m_MethodName: set_font
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 12800000, guid: 2b51915eaf0471e49aa3a791a9d56961, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Font, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
