@@ -17,6 +17,18 @@ namespace UnityEngine.UI
 
         [Space]
 
+        public bool transitionTextColor;
+
+        public Sprite spriteNormal;
+        public Sprite spriteSelected;
+
+        public Color colorNormal = new Color(255f / 255f, 255f / 255f, 255f / 255f, 1f);
+        public Color colorSelected = new Color(200f / 255f, 200f / 255f, 200f / 255f, 1f);
+
+        [Space]
+
+        private bool selected;
+
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
@@ -55,11 +67,22 @@ namespace UnityEngine.UI
 
         private void Toggle(bool toggle)
         {
+            selected = toggle;
             for (int i = 0; i < objectsToToggle.Length; i++)
             {
                 if (objectsToToggle[i] != null)
                 {
                     objectsToToggle[i].SetActive(toggle);
+                }
+            }
+
+            background.sprite = toggle ? spriteSelected : spriteNormal;
+            if (transitionTextColor)
+            {
+                Text text = background.GetComponentInChildren<Text>();
+                if (text != null)
+                {
+                    text.color = toggle ? colorSelected : colorNormal;
                 }
             }
         }
