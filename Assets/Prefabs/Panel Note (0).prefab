@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1155940735901452662}
   - component: {fileID: 1975897251555904069}
   - component: {fileID: 1155940735901452616}
+  - component: {fileID: 3346043422502020072}
   m_Layer: 5
   m_Name: Panel Note (0)
   m_TagString: Untagged
@@ -125,6 +126,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &3346043422502020072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155940735901452660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbf2ff5047231f4c88cb3c14ba977ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 1155940736539208697}
+  entryImage: {fileID: 0}
+  entryText: {fileID: 1155940736539208697}
 --- !u!1 &1155940736539208679
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +254,7 @@ GameObject:
   - component: {fileID: 1155940736673161397}
   - component: {fileID: 1239350554}
   - component: {fileID: 1155940736673161399}
+  - component: {fileID: 3321383253266431263}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -322,8 +339,20 @@ MonoBehaviour:
   onClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1239350554}
-        m_TargetAssemblyTypeName: CustomHoverButton, Assembly-CSharp
+      - m_Target: {fileID: 3321383253266431263}
+        m_TargetAssemblyTypeName: RemoveNote, Assembly-CSharp
+        m_MethodName: DeleteNote
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 3346043422502020072}
+          m_ObjectArgumentAssemblyTypeName: PanelInfoReference, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3321383253266431263}
+        m_TargetAssemblyTypeName: RemoveNote, Assembly-CSharp
         m_MethodName: DestroyObj
         m_Mode: 2
         m_Arguments:
@@ -357,6 +386,18 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
   m_LayoutPriority: 1
+--- !u!114 &3321383253266431263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155940736673161392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932fa2a563be94349aa76222bbb465d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1155940737345078872
 GameObject:
   m_ObjectHideFlags: 0

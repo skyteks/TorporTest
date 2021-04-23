@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public bool autoLoad;
     public bool autoSave;
@@ -38,7 +38,8 @@ public class GameManager : MonoBehaviour
     public void SetDefaultCodex()
     {
         SaveData.Codex codex = CreateDefaultCodex();
-        saveData = new SaveData(codex);
+        SaveData.Notes notes = CreateDefaultNotes();
+        saveData = new SaveData(codex, notes);
 
         SetDirty();
     }
@@ -103,6 +104,22 @@ public class GameManager : MonoBehaviour
         return codex;
     }
 
+    private SaveData.Notes CreateDefaultNotes()
+    {
+        SaveData.Notes.Act.Note note1A = new SaveData.Notes.Act.Note("I was elected 4th President of Sordland.");
+        SaveData.Notes.Act.Note note1B = new SaveData.Notes.Act.Note("I have vetoed a new electoral campaign finance bull that was passed by the Assembly.");
+        SaveData.Notes.Act.Note note1C = new SaveData.Notes.Act.Note("I decded to invest in Armadine Industries by purchasing 3000 shares.");
+        SaveData.Notes.Act.Note note1D = new SaveData.Notes.Act.Note("I declared my intention to work with the reformists for the constitutional reform.");
+
+        SaveData.Notes.Act act1 = new SaveData.Notes.Act(note1A, note1B, note1C, note1D);
+        SaveData.Notes.Act act2 = new SaveData.Notes.Act();
+        SaveData.Notes.Act act3 = new SaveData.Notes.Act();
+        SaveData.Notes.Act act4 = new SaveData.Notes.Act();
+
+        SaveData.Notes notes = new SaveData.Notes(act1, act2, act3, act4);
+        return notes;
+    }
+
     private void SetDirty()
     {
 #if UNITY_EDITOR
@@ -111,5 +128,18 @@ public class GameManager : MonoBehaviour
             UnityEditor.EditorUtility.SetDirty(this);
         }
 #endif
+    }
+
+    public void AddNote(string text, int actIndex)
+    {
+        SaveData.Notes.Act act = saveData.notes.GetChildren()[actIndex] as SaveData.Notes.Act;
+        SaveData.Notes.Act.Note newNote = new SaveData.Notes.Act.Note(text);
+        act.notes.Add(newNote);
+    }
+
+    public void DeleteNote(int index, int actIndex)
+    {
+        SaveData.Notes.Act act = saveData.notes.GetChildren()[actIndex] as SaveData.Notes.Act;
+        act.notes.RemoveAt(index);
     }
 }

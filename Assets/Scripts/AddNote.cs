@@ -20,5 +20,13 @@ public class AddNote : MonoBehaviour
         noteText.text = inputField.text;
 
         inputField.text = "";
+
+        SaveNewNote(noteText.text);
+    }
+
+    private void SaveNewNote(string text)
+    {
+        int index = tabGroup.selectedTab.transform.GetSiblingIndex();
+        GameManager.Instance.AddNote(text, index);
     }
 }

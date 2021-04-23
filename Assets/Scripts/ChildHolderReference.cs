@@ -11,10 +11,10 @@ public class ChildHolderReference : MonoBehaviour
     }
 
     [SerializeField]
-    private SaveData.Codex.Levels level = SaveData.Codex.Levels.Categories;
+    private SaveData.Levels level = SaveData.Levels.Categories;
     [SerializeField]
     private HolderTypes holderType = HolderTypes.buttons;
 
-    public SaveData.Codex.Levels levelValue { get { return level; } }
+    public SaveData.Levels levelValue { get { return level; } }
     public HolderTypes typeValue { get { return holderType; } }
 }

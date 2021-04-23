@@ -6,36 +6,29 @@ namespace UnityEngine.UI
 {
     public class TabGroup : MonoBehaviour
     {
-        private List<TabButton> tabButtons = new List<TabButton>();
+        private List<TabButton> buttons = new List<TabButton>();
+        private List<TabGroup> childTabs = new List<TabGroup>();
 
         public TabButton selectedTab;
 
-        private void Start()
-        {
-            if (selectedTab != null)
-            {
-                OnTabSelected(selectedTab);
-            }
-        }
-
         public void Subscribe(TabButton button)
         {
-            if (tabButtons == null)
-            {
-                tabButtons = new List<TabButton>();
-            }
+            buttons.Add(button);
 
-            tabButtons.Add(button);
+            List<TabGroup> children = new List<TabGroup>(button.objectsToToggle[0].transform.parent?.GetComponentsInChildren<TabGroup>());
+            if (children != null && children.Count > 0)
+            {
+                children.Remove(this);
+                childTabs.AddRange(children);
+            }
         }
 
         public void OnTabEnter(TabButton button)
         {
-            ResetTabs();
         }
 
         public void OnTabExit(TabButton button)
         {
-            ResetTabs();
         }
 
         public void OnTabSelected(TabButton button)
@@ -45,15 +38,31 @@ namespace UnityEngine.UI
             ResetTabs();
         }
 
-        public void ResetTabs()
+        public void ResetTabs(bool hard = false)
         {
-            foreach (var button in tabButtons)
+            for (int i = 0; i < buttons.Count; i++)
             {
-                if (button != null && button == selectedTab)
+                if (buttons[i] == null)
+                {
+                    buttons.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                if (buttons[i] == selectedTab && !hard)
                 {
                     continue;
                 }
-                button.Deselect();
+                buttons[i].Deselect();
+            }
+            for (int i = 0; i < childTabs.Count; i++)
+            {
+                if(childTabs[i] == null)
+                {
+                    childTabs.RemoveAt(i);
+                    i--;
+                    continue;
+                }
+                childTabs[i].ResetTabs(true);
             }
         }
     }

@@ -48,9 +48,4 @@ public class CustomHoverButton : MonoBehaviour, IPointerEnterHandler, IPointerCl
 
         onHover?.Invoke(toggle);
     }
-
-    public void DestroyObj(Object obj)
-    {
-        Destroy(obj);
-    }
 }
