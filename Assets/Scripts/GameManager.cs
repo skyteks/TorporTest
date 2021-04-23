@@ -4,13 +4,24 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public bool loadData;
     public SaveData saveData;
+
+    [Space]
     [SerializeField]
-    private Sprite entry1A1Image;
+    private Sprite entry1A1Image = null;
 
     void Start()
     {
-        //LoadDataFromFile();
+        if (loadData)
+        {
+            bool success = LoadDataFromFile();
+            if (!success)
+            {
+                SetDefaultCodex();
+                SaveDataToFile();
+            }
+        }
         GetComponent<UIManager>()?.PreviewData(saveData);
     }
 
@@ -30,10 +41,16 @@ public class GameManager : MonoBehaviour
     }
 
     [ContextMenu("Load Data From File")]
-    public void LoadDataFromFile()
+    public bool LoadDataFromFile()
     {
-        saveData = SaveManager.Load();
-        SetDirty();
+        SaveData tmp = SaveManager.Load();
+        if (tmp != null)
+        {
+            saveData = tmp;
+            SetDirty();
+            return true;
+        }
+        return false;
     }
 
     private SaveData.Codex CreateDefaultCodex()
@@ -60,7 +77,7 @@ public class GameManager : MonoBehaviour
 
         SaveData.Codex.Category.Topic topic1A = new SaveData.Codex.Category.Topic("Cabinet",
             entry1A1, entry1A2, entry1A3, entry1A4, entry1A5, entry1A6, entry1A7, entry1A8, entry1A9, entry1A0);
-        
+
         SaveData.Codex.Category.Topic topic1B = new SaveData.Codex.Category.Topic("Family");
         SaveData.Codex.Category.Topic topic1C = new SaveData.Codex.Category.Topic("Party Leaders");
         SaveData.Codex.Category.Topic topic1D = new SaveData.Codex.Category.Topic("The Assembly");
@@ -82,7 +99,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Application.isEditor && !Application.isPlaying)
         {
-        UnityEditor.EditorUtility.SetDirty(this);
+            UnityEditor.EditorUtility.SetDirty(this);
         }
 #endif
     }
