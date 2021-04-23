@@ -9,51 +9,51 @@ public class SaveData
     public class Codex
     {
         [System.Serializable]
-        public class Topic
+        public class Category
         {
             [System.Serializable]
-            public class Entry
+            public class Topic
             {
                 [System.Serializable]
-                public class Content
+                public class Entry
                 {
-                    public string title;
+                    public string name;
                     public Sprite image;
                     public string text;
 
-                    public Content(string _title, Sprite _image, string _text)
+                    public Entry(string _name, Sprite _image, string _text)
                     {
-                        title = _title;
+                        name = _name;
                         image = _image;
                         text = _text;
                     }
                 }
 
                 public string name;
-                public Content[] contents;
+                public Entry[] entries;
 
-                public Entry(string _name, params Content[] _contents)
+                public Topic(string _name, params Entry[] _entries)
                 {
                     name = _name;
-                    contents = _contents;
+                    entries = _entries;
                 }
             }
 
             public string name;
-            public Entry[] entries;
+            public Topic[] topics;
 
-            public Topic(string _name, params Entry[] _entries)
+            public Category(string _name, params Topic[] _topics)
             {
                 name = _name;
-                entries = _entries;
+                topics = _topics;
             }
         }
 
-        public Topic[] topics;
+        public Category[] categories;
 
-        public Codex(params Topic[] _topics)
+        public Codex(params Category[] _categories)
         {
-            topics = _topics;
+            categories = _categories;
         }
     }
 

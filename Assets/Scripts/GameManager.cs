@@ -35,43 +35,42 @@ public class GameManager : MonoBehaviour
 
     private SaveData.Codex CreateDefaultCodex()
     {
-        string content1A1Text = string.Concat(
+        string entry1A1Text = string.Concat(
             "Greater Holsord is the largest region of \n",
             "Sordland, bordering the regions of Nargis.\n",
             "Geisland, Bergia and Lorren, as well as the\n",
             "country of Lespia. The region is governed from\n",
             "the capital of Sordland, Holsord. It is the most\n",
             "populous region of Sordlands's seven regions\n");
-        SaveData.Codex.Topic.Entry.Content content1A1 = new SaveData.Codex.Topic.Entry.Content("Petr Vectern", null, content1A1Text);
+        SaveData.Codex.Category.Topic.Entry entry1A1 = new SaveData.Codex.Category.Topic.Entry("Petr Vectern", null, entry1A1Text);
 
-        SaveData.Codex.Topic.Entry.Content content1A2 = new SaveData.Codex.Topic.Entry.Content("Petr Vectern", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A3 = new SaveData.Codex.Topic.Entry.Content("Lucian Galade", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A4 = new SaveData.Codex.Topic.Entry.Content("Lileas Graf", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A5 = new SaveData.Codex.Topic.Entry.Content("Symon Holl", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A6 = new SaveData.Codex.Topic.Entry.Content("Iosef Lancea", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A7 = new SaveData.Codex.Topic.Entry.Content("Deivid Wisci", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A8 = new SaveData.Codex.Topic.Entry.Content("Nia Morgna", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A9 = new SaveData.Codex.Topic.Entry.Content("Gus Manger", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A10 = new SaveData.Codex.Topic.Entry.Content("Ciara Walda", null, "");
-        SaveData.Codex.Topic.Entry.Content content1A11 = new SaveData.Codex.Topic.Entry.Content("Paskal Beniwoll", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A2 = new SaveData.Codex.Category.Topic.Entry("Lucian Galade", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A3 = new SaveData.Codex.Category.Topic.Entry("Lileas Graf", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A4 = new SaveData.Codex.Category.Topic.Entry("Symon Holl", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A5 = new SaveData.Codex.Category.Topic.Entry("Iosef Lancea", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A6 = new SaveData.Codex.Category.Topic.Entry("Deivid Wisci", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A7 = new SaveData.Codex.Category.Topic.Entry("Nia Morgna", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A8 = new SaveData.Codex.Category.Topic.Entry("Gus Manger", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A9 = new SaveData.Codex.Category.Topic.Entry("Ciara Walda", null, "");
+        SaveData.Codex.Category.Topic.Entry entry1A0 = new SaveData.Codex.Category.Topic.Entry("Paskal Beniwoll", null, "");
 
 
-        SaveData.Codex.Topic.Entry entry1A = new SaveData.Codex.Topic.Entry("Cabinet",
-            content1A1, content1A2, content1A3, content1A4, content1A5, content1A6, content1A7, content1A8, content1A9, content1A10, content1A11);
+        SaveData.Codex.Category.Topic topic1A = new SaveData.Codex.Category.Topic("Cabinet",
+            entry1A1, entry1A2, entry1A3, entry1A4, entry1A5, entry1A6, entry1A7, entry1A8, entry1A9, entry1A0);
+        
+        SaveData.Codex.Category.Topic topic1B = new SaveData.Codex.Category.Topic("Family");
+        SaveData.Codex.Category.Topic topic1C = new SaveData.Codex.Category.Topic("Party Leaders");
+        SaveData.Codex.Category.Topic topic1D = new SaveData.Codex.Category.Topic("The Assembly");
+        SaveData.Codex.Category.Topic topic1E = new SaveData.Codex.Category.Topic("The Supreme Court");
+        SaveData.Codex.Category category1 = new SaveData.Codex.Category("Characters", topic1A, topic1B, topic1C, topic1D, topic1E);
 
-        SaveData.Codex.Topic.Entry entry1B = new SaveData.Codex.Topic.Entry("Family");
-        SaveData.Codex.Topic.Entry entry1C = new SaveData.Codex.Topic.Entry("Party Leaders");
-        SaveData.Codex.Topic.Entry entry1D = new SaveData.Codex.Topic.Entry("The Assembly");
-        SaveData.Codex.Topic.Entry entry1E = new SaveData.Codex.Topic.Entry("The Supreme Court");
-        SaveData.Codex.Topic topic1 = new SaveData.Codex.Topic("Characters", entry1A, entry1B, entry1C, entry1D, entry1E);
+        SaveData.Codex.Category category2 = new SaveData.Codex.Category("Locations");
 
-        SaveData.Codex.Topic topic2 = new SaveData.Codex.Topic("Locations");
+        SaveData.Codex.Category category3 = new SaveData.Codex.Category("Organisations");
 
-        SaveData.Codex.Topic topic3 = new SaveData.Codex.Topic("Organisations");
+        SaveData.Codex.Category category4 = new SaveData.Codex.Category("History");
 
-        SaveData.Codex.Topic topic4 = new SaveData.Codex.Topic("History");
-
-        SaveData.Codex codex = new SaveData.Codex(topic1, topic2, topic3, topic4);
+        SaveData.Codex codex = new SaveData.Codex(category1, category2, category3, category4);
         return codex;
     }
 
