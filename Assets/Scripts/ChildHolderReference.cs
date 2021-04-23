@@ -7,7 +7,7 @@ public class ChildHolderReference : MonoBehaviour
     public enum HolderTypes
     {
         buttons,
-        tabs,
+        panels,
     }
 
     [SerializeField]

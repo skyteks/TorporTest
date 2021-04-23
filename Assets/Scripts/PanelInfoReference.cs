@@ -6,4 +6,8 @@ using UnityEngine.UI;
 public class PanelInfoReference : MonoBehaviour
 {
     public Text nameText;
+
+    [Header("Entry")]
+    public Image entryImage;
+    public Text entryText;
 }

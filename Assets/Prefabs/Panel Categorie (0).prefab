@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 9074131564787248729}
   - component: {fileID: 1682945827206894923}
   m_Layer: 5
-  m_Name: Panel Tabs Content
+  m_Name: Panel Tabs Topics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,7 +491,7 @@ GameObject:
   - component: {fileID: 9074131565178846827}
   - component: {fileID: 3893404902855423816}
   m_Layer: 5
-  m_Name: Entries Header
+  m_Name: Topics Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -597,7 +597,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -680,7 +680,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7446216532346751897, guid: 2e018f4b23469884da2a56507854575f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7446216532346751897, guid: 2e018f4b23469884da2a56507854575f, type: 3}
       propertyPath: m_AnchorMin.x
@@ -716,7 +716,7 @@ PrefabInstance:
       objectReference: {fileID: 9074131564742953642}
     - target: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
       propertyPath: m_Name
-      value: Button Entry (0)
+      value: Button Topic (0)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2e018f4b23469884da2a56507854575f, type: 3}
@@ -763,9 +763,13 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 325
       objectReference: {fileID: 0}
+    - target: {fileID: 4234791628292821576, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
       propertyPath: m_Name
-      value: Panel Entry (0)
+      value: Panel Topic (0)
       objectReference: {fileID: 0}
     - target: {fileID: 4234791629645534607, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
       propertyPath: m_LocalPosition.x

@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public SaveData saveData;
+    [SerializeField]
+    private Sprite entry1A1Image;
 
     void Start()
     {
@@ -37,13 +39,13 @@ public class GameManager : MonoBehaviour
     private SaveData.Codex CreateDefaultCodex()
     {
         string entry1A1Text = string.Concat(
-            "Greater Holsord is the largest region of \n",
+            "Greater Holsord is the second largest region of\n",
             "Sordland, bordering the regions of Nargis.\n",
             "Geisland, Bergia and Lorren, as well as the\n",
             "country of Lespia. The region is governed from\n",
             "the capital of Sordland, Holsord. It is the most\n",
             "populous region of Sordlands's seven regions\n");
-        SaveData.Codex.Category.Topic.Entry entry1A1 = new SaveData.Codex.Category.Topic.Entry("Petr Vectern", null, entry1A1Text);
+        SaveData.Codex.Category.Topic.Entry entry1A1 = new SaveData.Codex.Category.Topic.Entry("Petr Vectern", entry1A1Image, entry1A1Text);
 
         SaveData.Codex.Category.Topic.Entry entry1A2 = new SaveData.Codex.Category.Topic.Entry("Lucian Galade", null, "");
         SaveData.Codex.Category.Topic.Entry entry1A3 = new SaveData.Codex.Category.Topic.Entry("Lileas Graf", null, "");

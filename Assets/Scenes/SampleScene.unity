@@ -287,7 +287,7 @@ MonoBehaviour:
   fitType: 1
   rows: 1
   columns: 2
-  cellSize: {x: 960, y: 1005.2117}
+  cellSize: {x: 960, y: 1004.7067}
 --- !u!114 &92514754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1603,11 +1603,24 @@ MonoBehaviour:
         - name: Cabinet
           entries:
           - name: Petr Vectern
-            image: {fileID: 0}
-            text: "Greater Holsord is the largest region of \nSordland, bordering
-              the regions of Nargis.\nGeisland, Bergia and Lorren, as well as the\ncountry
-              of Lespia. The region is governed from\nthe capital of Sordland, Holsord.
-              It is the most\npopulous region of Sordlands's seven regions\n"
+            image: {fileID: 21300000, guid: d15af4914faf86549b4add6a8badf7a8, type: 3}
+            text: 'Greater Holsord is the second largest region of
+
+              Sordland,
+              bordering the regions of Nargis.
+
+              Geisland, Bergia and
+              Lorren, as well as the
+
+              country of Lespia. The region
+              is governed from
+
+              the capital of Sordland, Holsord. It
+              is the most
+
+              populous region of Sordlands''s seven regions
+
+'
           - name: Lucian Galade
             image: {fileID: 0}
             text: 
@@ -1649,6 +1662,7 @@ MonoBehaviour:
         topics: []
       - name: History
         topics: []
+  entry1A1Image: {fileID: 21300000, guid: d15af4914faf86549b4add6a8badf7a8, type: 3}
 --- !u!4 &923419752
 Transform:
   m_ObjectHideFlags: 0
@@ -1680,10 +1694,10 @@ MonoBehaviour:
   levelCategoryPrefabs:
     buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
     panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
-  levelEntryPrefabs:
+  levelTopicPrefabs:
     buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
     panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
-  levelContentPrefabs:
+  levelEntryPrefabs:
     buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
     panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
 --- !u!1 &1004427914 stripped
@@ -3204,6 +3218,7 @@ GameObject:
   - component: {fileID: 1566147694}
   - component: {fileID: 1566147693}
   - component: {fileID: 1566147696}
+  - component: {fileID: 1566147697}
   m_Layer: 5
   m_Name: Panel Right
   m_TagString: Untagged
@@ -3302,6 +3317,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedTab: {fileID: 1096482720}
+--- !u!114 &1566147697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566147691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cea3711b542f8744db5cbba397aadc34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 2
+  holderType: 1
 --- !u!1 &1625742333
 GameObject:
   m_ObjectHideFlags: 0
@@ -4698,7 +4727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
       propertyPath: m_Name
-      value: Panel Content (0)
+      value: Panel Entry (0)
       objectReference: {fileID: 0}
     - target: {fileID: 8795286022309324431, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4851,23 +4880,27 @@ PrefabInstance:
       objectReference: {fileID: 1004427914}
     - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
+      value: 162.5
       objectReference: {fileID: 0}
     - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 325
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074131563394436460, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9074131563534085426, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_AnchorMin.y
@@ -4887,6 +4920,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9074131563534085426, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
       propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9074131563534085426, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9074131564787248725, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
