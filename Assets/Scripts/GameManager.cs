@@ -6,9 +6,10 @@ public class GameManager : MonoBehaviour
 {
     public SaveData saveData;
 
-    void Awake()
+    void Start()
     {
-        SetDefaultCodex();
+        //LoadDataFromFile();
+        GetComponent<UIManager>()?.PreviewData(saveData);
     }
 
     [ContextMenu("Set Default Codex")]

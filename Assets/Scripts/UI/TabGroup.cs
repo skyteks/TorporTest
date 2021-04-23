@@ -6,7 +6,7 @@ namespace UnityEngine.UI
 {
     public class TabGroup : MonoBehaviour
     {
-        private List<TabButton> tabButtons;
+        private List<TabButton> tabButtons = new List<TabButton>();
 
         public TabButton selectedTab;
 

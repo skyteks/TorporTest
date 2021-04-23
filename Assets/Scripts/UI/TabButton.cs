@@ -13,7 +13,7 @@ namespace UnityEngine.UI
 
         public Image background;
 
-        public GameObject[] objectsToToggle;
+        public List<GameObject> objectsToToggle = new List<GameObject>();
 
         [Space]
 
@@ -32,7 +32,7 @@ namespace UnityEngine.UI
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
-        void Awake()
+        public void Init()
         {
             background = GetComponent<Image>();
             tabGroup.Subscribe(this);
@@ -66,7 +66,7 @@ namespace UnityEngine.UI
         private void Toggle(bool toggle)
         {
             selected = toggle;
-            for (int i = 0; i < objectsToToggle.Length; i++)
+            for (int i = 0; i < objectsToToggle.Count; i++)
             {
                 if (objectsToToggle[i] != null)
                 {
