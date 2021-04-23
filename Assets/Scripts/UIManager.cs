@@ -64,7 +64,7 @@ public class UIManager : MonoBehaviour
         }
 
         SaveData.ITab[] acts = data.notes.GetChildren();
-        TabLevelHolders levelActsHolders = GetHolderReferences(SaveData.Levels.Acts);
+        TabLevelHolders levelActsHolders = GetHolderReferences(SaveData.Levels.Acts, true);
         for (int i = 0; i < acts.Length; i++)
         {
             SaveData.ITab[] notes = acts[i].GetChildren();
