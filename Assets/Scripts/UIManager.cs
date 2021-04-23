@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,32 +7,49 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [System.Serializable]
-    public struct TabLevel
+    public struct TabLevelPrefabs
     {
         public GameObject buttonPrefab;
         public GameObject panelPrefab;
-        [Space]
+    }
+    [System.Serializable]
+    public struct TabLevelHolders
+    {
         public ChildHolderReference buttonsHolder;
         public ChildHolderReference panelsHolder;
+
+        public TabLevelHolders(ChildHolderReference buttonsReference, ChildHolderReference panelsReference)
+        {
+            buttonsHolder = buttonsReference;
+            panelsHolder = panelsReference;
+        }
     }
 
     public bool preSelectFirst;
+    public Canvas canvas;
 
-    [Header("Category")]
-    public TabLevel levelCategory;
+    private TabLevelHolders levelCategoryHolders;
+
+    [Space]
+    [Header("Holders")]
+    public TabLevelPrefabs levelCategoryPrefabs;
+    public TabLevelPrefabs levelEntryPrefabs;
+    public TabLevelPrefabs levelContentPrefabs;
 
     public void PreviewData(SaveData data)
     {
         SaveData.Codex.Category[] categories = data.codex.categories;
-        ClearTabLevel(levelCategory);
+        levelCategoryHolders = GetHolderReferences(SaveData.Codex.Levels.Categories);
+        ClearTabLevel(levelCategoryHolders);
         for (int i = 0; i < categories.Length; i++)
         {
-            GameObject buttonInstance = Instantiate(levelCategory.buttonPrefab, Vector3.zero, Quaternion.identity, levelCategory.buttonsHolder.transform);
-            GameObject panelInstance = Instantiate(levelCategory.panelPrefab, Vector3.zero, Quaternion.identity, levelCategory.panelsHolder.transform);
+            GameObject buttonInstance = Instantiate(levelCategoryPrefabs.buttonPrefab, Vector3.zero, Quaternion.identity, levelCategoryHolders.buttonsHolder.transform);
+            GameObject panelInstance = Instantiate(levelCategoryPrefabs.panelPrefab, Vector3.zero, Quaternion.identity, levelCategoryHolders.panelsHolder.transform);
 
-            TabGroup tabGroup = levelCategory.panelsHolder.GetComponent<TabGroup>();
+            TabGroup tabGroup = levelCategoryHolders.panelsHolder.GetComponent<TabGroup>();
             TabButton tabButton = buttonInstance.GetComponent<TabButton>();
             tabButton.tabGroup = tabGroup;
+            tabButton.objectsToToggle.Clear();
             tabButton.objectsToToggle.Add(panelInstance);
             if (preSelectFirst && i == 0)
             {
@@ -48,17 +66,46 @@ public class UIManager : MonoBehaviour
                 infoReference = panelInstance.GetComponent<PanelInfoReference>();
             }
             infoReference.nameText.text = categories[i].name;
+
+            TabLevelHolders levelEntryHolders = GetHolderReferences(SaveData.Codex.Levels.Entries);
         }
     }
 
-    private void ClearTabLevel(TabLevel level)
+    private TabLevelHolders GetHolderReferences(SaveData.Codex.Levels level)
     {
-        foreach (Transform child in level.buttonsHolder.transform)
+        ChildHolderReference[] foundReferences = canvas.GetComponentsInChildren<ChildHolderReference>(true);
+        ChildHolderReference buttonsReference = null;
+        ChildHolderReference panelsReference = null;
+        for (int i = 0; i < foundReferences.Length; i++)
+        {
+            if (foundReferences[i].levelValue == level)
+            {
+                switch (foundReferences[i].typeValue)
+                {
+                    case ChildHolderReference.HolderTypes.buttons:
+                        buttonsReference = foundReferences[i];
+                        break;
+                    case ChildHolderReference.HolderTypes.tabs:
+                        panelsReference = foundReferences[i];
+                        break;
+                }
+            }
+        }
+        if (buttonsReference == null || panelsReference == null)
+        {
+            throw new NullReferenceException();
+        }
+        return new TabLevelHolders(buttonsReference, panelsReference);
+    }
+
+    private void ClearTabLevel(TabLevelHolders holders)
+    {
+        foreach (Transform child in holders.buttonsHolder.transform)
         {
             child.gameObject.SetActive(false);
             Destroy(child.gameObject);
         }
-        foreach (Transform child in level.panelsHolder.transform)
+        foreach (Transform child in holders.panelsHolder.transform)
         {
             child.gameObject.SetActive(false);
             Destroy(child.gameObject);

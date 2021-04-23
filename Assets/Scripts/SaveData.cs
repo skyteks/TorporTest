@@ -8,6 +8,13 @@ public class SaveData
     [System.Serializable]
     public class Codex
     {
+        public enum Levels
+        {
+            Categories,
+            Topics,
+            Entries,
+        }
+
         [System.Serializable]
         public class Category
         {

@@ -1676,11 +1676,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preSelectFirst: 0
-  levelCategory:
+  canvas: {fileID: 682864941}
+  levelCategoryPrefabs:
     buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
     panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
-    buttonsHolder: {fileID: 1647554441}
-    panelsHolder: {fileID: 1074080225}
+  levelEntryPrefabs:
+    buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
+    panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
+  levelContentPrefabs:
+    buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
+    panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
 --- !u!1 &1004427914 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
