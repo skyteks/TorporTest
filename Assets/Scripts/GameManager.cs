@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public bool loadData;
+    public bool autoLoad;
+    public bool autoSave;
     public SaveData saveData;
 
     [Space]
@@ -13,16 +14,24 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (loadData)
+        if (autoLoad)
         {
             bool success = LoadDataFromFile();
-            if (!success)
+            if (!success && autoSave)
             {
                 SetDefaultCodex();
                 SaveDataToFile();
             }
         }
         GetComponent<UIManager>()?.PreviewData(saveData);
+    }
+
+    void OnApplicationQuit()
+    {
+        if (autoSave)
+        {
+            SaveDataToFile();
+        }
     }
 
     [ContextMenu("Set Default Codex")]
