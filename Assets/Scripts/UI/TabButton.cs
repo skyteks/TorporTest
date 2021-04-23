@@ -56,13 +56,11 @@ namespace UnityEngine.UI
         public void Select()
         {
             Toggle(true);
-            onTabSelected?.Invoke();
         }
 
         public void Deselect()
         {
             Toggle(false);
-            onTabDeselected?.Invoke();
         }
 
         private void Toggle(bool toggle)
@@ -84,6 +82,15 @@ namespace UnityEngine.UI
                 {
                     text.color = toggle ? colorSelected : colorNormal;
                 }
+            }
+
+            if (toggle)
+            {
+                onTabSelected?.Invoke();
+            }
+            else
+            {
+                onTabDeselected?.Invoke();
             }
         }
     }
