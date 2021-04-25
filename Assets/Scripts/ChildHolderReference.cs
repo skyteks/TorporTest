@@ -17,4 +17,6 @@ public class ChildHolderReference : MonoBehaviour
 
     public SaveData.Levels levelValue { get { return level; } }
     public HolderTypes typeValue { get { return holderType; } }
+
+    public bool hasBeenUsed { get; set; }
 }

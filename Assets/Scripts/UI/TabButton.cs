@@ -32,6 +32,15 @@ namespace UnityEngine.UI
         public UnityEvent onTabSelected;
         public UnityEvent onTabDeselected;
 
+        void OnDisable()
+        {
+            Deselect();
+            if (tabGroup.selectedTab == this)
+            {
+                tabGroup.selectedTab = null;
+            }
+        }
+
         public void Init()
         {
             background = GetComponent<Image>();

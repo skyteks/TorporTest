@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(UIManager))]
 public class GameManager : Singleton<GameManager>
 {
     public bool autoLoad;
@@ -9,8 +10,16 @@ public class GameManager : Singleton<GameManager>
     public SaveData saveData;
 
     [Space]
+    [Header("Default Fallback Info")]
     [SerializeField]
     private Sprite entry1A1Image = null;
+
+    private UIManager uiManager;
+
+    void Awake()
+    {
+        uiManager = GetComponent<UIManager>();
+    }
 
     void Start()
     {
@@ -23,7 +32,7 @@ public class GameManager : Singleton<GameManager>
                 SaveDataToFile();
             }
         }
-        GetComponent<UIManager>()?.PreviewData(saveData);
+        uiManager.PreviewData(saveData);
     }
 
     void OnApplicationQuit()

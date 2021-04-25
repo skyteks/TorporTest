@@ -7,20 +7,12 @@ namespace UnityEngine.UI
     public class TabGroup : MonoBehaviour
     {
         private List<TabButton> buttons = new List<TabButton>();
-        private List<TabGroup> childTabs = new List<TabGroup>();
 
         public TabButton selectedTab;
 
         public void Subscribe(TabButton button)
         {
             buttons.Add(button);
-
-            List<TabGroup> children = new List<TabGroup>(button.objectsToToggle[0].transform.parent?.GetComponentsInChildren<TabGroup>());
-            if (children != null && children.Count > 0)
-            {
-                children.Remove(this);
-                childTabs.AddRange(children);
-            }
         }
 
         public void OnTabEnter(TabButton button)
@@ -53,16 +45,6 @@ namespace UnityEngine.UI
                     continue;
                 }
                 buttons[i].Deselect();
-            }
-            for (int i = 0; i < childTabs.Count; i++)
-            {
-                if(childTabs[i] == null)
-                {
-                    childTabs.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                childTabs[i].ResetTabs(true);
             }
         }
     }

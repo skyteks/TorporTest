@@ -22,12 +22,23 @@ public class UIManager : MonoBehaviour
         {
             buttonsHolder = buttonsReference;
             panelsHolder = panelsReference;
+            SetUsed();
+        }
+
+        private void SetUsed()
+        {
+            if (buttonsHolder != null)
+            {
+                buttonsHolder.hasBeenUsed = true;
+            }
+            if (panelsHolder != null)
+            {
+                panelsHolder.hasBeenUsed = true;
+            }
         }
     }
 
     public Canvas canvas;
-
-    private TabLevelHolders levelCategoryHolders;
 
     [Space]
     [Header("Prefabs")]
@@ -35,27 +46,25 @@ public class UIManager : MonoBehaviour
     public TabLevelPrefabs levelTopicPrefabs;
     public TabLevelPrefabs levelEntryPrefabs;
     [Space]
+    public TabLevelPrefabs levelActPrefabs;
     public TabLevelPrefabs levelNotePrefabs;
 
     public void PreviewData(SaveData data)
     {
         SaveData.ITab[] categories = data.codex.GetChildren();
-        levelCategoryHolders = GetHolderReferences(SaveData.Levels.Categories);
-        ClearTabLevel(levelCategoryHolders);
+        TabLevelHolders levelCategoryHolders = GetHolderReferences(SaveData.Levels.Categories);
         for (int i = 0; i < categories.Length; i++)
         {
             SetupLevel(categories[i], i, levelCategoryPrefabs, levelCategoryHolders);
 
             SaveData.ITab[] topics = categories[i].GetChildren();
             TabLevelHolders levelTopicHolders = GetHolderReferences(SaveData.Levels.Topics);
-            ClearTabLevel(levelTopicHolders);
             for (int j = 0; j < topics.Length; j++)
             {
                 SetupLevel(topics[j], j, levelTopicPrefabs, levelTopicHolders);
 
                 SaveData.ITab[] entries = topics[j].GetChildren();
                 TabLevelHolders levelEntryHolders = GetHolderReferences(SaveData.Levels.Entries);
-                ClearTabLevel(levelEntryHolders, !(i == 0 && j == 0));
                 for (int k = 0; k < entries.Length; k++)
                 {
                     SetupLevel(entries[k], k, levelEntryPrefabs, levelEntryHolders);
@@ -64,15 +73,16 @@ public class UIManager : MonoBehaviour
         }
 
         SaveData.ITab[] acts = data.notes.GetChildren();
-        TabLevelHolders levelActsHolders = GetHolderReferences(SaveData.Levels.Acts, true);
+        TabLevelHolders levelActHolders = GetHolderReferences(SaveData.Levels.Acts);
         for (int i = 0; i < acts.Length; i++)
         {
+            SetupLevel(acts[i], i, levelActPrefabs, levelActHolders);
+
             SaveData.ITab[] notes = acts[i].GetChildren();
             TabLevelHolders levelNoteHolders = GetHolderReferences(SaveData.Levels.Notes, true);
-            ClearTabLevel(levelNoteHolders);
             for (int j = 0; j < notes.Length; j++)
             {
-                SetupLevel(acts[j], j, levelNotePrefabs, levelNoteHolders);
+                SetupLevel(notes[j], j, levelNotePrefabs, levelNoteHolders);
             }
         }
 
@@ -112,27 +122,35 @@ public class UIManager : MonoBehaviour
             tabGroup.selectedTab = index == 0 ? tabButton : null;
         }
 
-        PanelInfoReference infoReference;
-        infoReference = buttonInstance?.GetComponent<PanelInfoReference>();
-        if (infoReference != null)
+        PanelInfoReference infoReferenceButton;
+        PanelInfoReference infoReferencePanel;
+        infoReferenceButton = buttonInstance?.GetComponent<PanelInfoReference>();
+        if (infoReferenceButton != null)
         {
-            infoReference.nameText.text = tab.GetName();
+            infoReferenceButton.nameText.text = tab.GetName();
         }
-        infoReference = panelInstance.GetComponent<PanelInfoReference>();
-        if (infoReference != null)
+        infoReferencePanel = panelInstance.GetComponent<PanelInfoReference>();
+        if (infoReferencePanel != null)
         {
-            infoReference.nameText.text = tab.GetName();
+            infoReferencePanel.nameText.text = tab.GetName();
         }
 
         if (tab is SaveData.Codex.Category)
         {
-            buttonInstance.GetComponentInChildren<Text>().text = (index + 1).ToString();
+            infoReferenceButton.nameText.text = (index + 1).ToString();
         }
         if (tab is SaveData.Codex.Category.Topic.Entry)
         {
             SaveData.Codex.Category.Topic.Entry entry = tab as SaveData.Codex.Category.Topic.Entry;
-            infoReference.entryImage.sprite = entry.image;
-            infoReference.entryText.text = entry.text;
+            infoReferencePanel.entryImage.sprite = entry.image;
+            infoReferencePanel.entryText.text = entry.text;
+        }
+        if (tab is SaveData.Notes.Act)
+        {
+            string roman = SaveData.Notes.Act.ToRoman(index + 1);
+            buttonInstance.name = string.Concat(buttonInstance.name, " ", roman);
+            panelInstance.name = string.Concat(panelInstance.name, " ", roman);
+            infoReferenceButton.nameText.text = string.Concat(infoReferenceButton.nameText.text, " ", roman);
         }
         if (tab is SaveData.Notes.Act.Note)
         {
@@ -143,7 +161,7 @@ public class UIManager : MonoBehaviour
 
     private TabLevelHolders GetHolderReferences(SaveData.Levels level, bool noButton = false)
     {
-        ChildHolderReference[] foundReferences = canvas.GetComponentsInChildren<ChildHolderReference>(true);
+        ChildHolderReference[] foundReferences = canvas.GetComponentsInChildren<ChildHolderReference>();
         ChildHolderReference buttonsReference = null;
         ChildHolderReference panelsReference = null;
         for (int i = 0; i < foundReferences.Length; i++)
@@ -153,11 +171,21 @@ public class UIManager : MonoBehaviour
                 switch (foundReferences[i].typeValue)
                 {
                     case ChildHolderReference.HolderTypes.buttons:
-                        buttonsReference = foundReferences[i];
+                        if (!foundReferences[i].hasBeenUsed)
+                        {
+                            buttonsReference = foundReferences[i];
+                        }
                         break;
                     case ChildHolderReference.HolderTypes.panels:
-                        panelsReference = foundReferences[i];
+                        if (noButton ? !foundReferences[i].hasBeenUsed : true)
+                        {
+                            panelsReference = foundReferences[i];
+                        }
                         break;
+                }
+                if ((noButton ? true : buttonsReference != null) && panelsReference != null)
+                {
+                    break;
                 }
             }
         }
@@ -166,27 +194,5 @@ public class UIManager : MonoBehaviour
             throw new NullReferenceException();
         }
         return new TabLevelHolders(buttonsReference, panelsReference);
-    }
-
-    private void ClearTabLevel(TabLevelHolders holders, bool dontClearPanel = false)
-    {
-        if (holders.buttonsHolder != null)
-        {
-            foreach (Transform child in holders.buttonsHolder.transform)
-            {
-                child.gameObject.SetActive(false);
-                child.transform.SetParent(null, true);
-                Destroy(child.gameObject);
-            }
-        }
-        if (!dontClearPanel && holders.panelsHolder != null)
-        {
-            foreach (Transform child in holders.panelsHolder.transform)
-            {
-                child.gameObject.SetActive(false);
-                child.transform.SetParent(null, true);
-                Destroy(child.gameObject);
-            }
-        }
     }
 }
