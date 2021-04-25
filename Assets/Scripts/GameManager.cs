@@ -76,7 +76,7 @@ public class GameManager : Singleton<GameManager>
     {
         string entry1A1Text = string.Concat(
             "Greater Holsord is the second largest region of\n",
-            "Sordland, bordering the regions of Nargis.\n",
+            "Sordland, bordering the regions of Nargis,\n",
             "Geisland, Bergia and Lorren, as well as the\n",
             "country of Lespia. The region is governed from\n",
             "the capital of Sordland, Holsord. It is the most\n",
