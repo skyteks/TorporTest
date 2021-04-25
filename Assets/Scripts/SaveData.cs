@@ -151,7 +151,7 @@ public class SaveData
 
             public ITab[] GetChildren()
             {
-                return notes.ToArray();
+                return notes == null ? new ITab[0] : notes.ToArray();
             }
 
             public string GetName()
