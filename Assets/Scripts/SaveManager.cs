@@ -38,17 +38,34 @@ public static class SaveManager
 
         if (!Directory.Exists(path))
         {
+            Debug.LogWarning("Loading data failed, directory does not exist");
             return null;
         }
         path = string.Concat(path, fileName);
         if (!File.Exists(path))
         {
+            Debug.LogWarning("Loading data failed, file does not exist ");
             return null;
         }
 
         string json = File.ReadAllText(path);
 
-        SaveData data = JsonUtility.FromJson<SaveData>(json);
+        SaveData data;
+        try
+        {
+            data = JsonUtility.FromJson<SaveData>(json);
+        }
+        catch (System.ArgumentException)
+        {
+            Debug.LogWarning(string.Concat("Loading data failed, from: ", path));
+            data = null;
+        }
+
+        if (data != null)
+        {
+            Debug.Log(string.Concat("Loaded data from: ", path));
+        }
+
         return data;
     }
 }

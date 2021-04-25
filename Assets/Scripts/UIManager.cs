@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
     }
 
     public Canvas canvas;
+    public InputField noteInputField;
 
     [Space]
     [Header("Prefabs")]
@@ -155,7 +156,13 @@ public class UIManager : MonoBehaviour
         if (tab is SaveData.Notes.Act.Note)
         {
             SaveData.Notes.Act.Note note = tab as SaveData.Notes.Act.Note;
-            infoReference.nameText.text = note.text;
+            string text = note.text;
+            if (text.Length > noteInputField.characterLimit)
+            {
+                text = text.Remove(noteInputField.characterLimit);
+                note.text = text;
+            }
+            infoReferencePanel.nameText.text = text;
         }
     }
 
