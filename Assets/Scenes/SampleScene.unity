@@ -706,6 +706,59 @@ Transform:
   m_Father: {fileID: 1502564614}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 45, z: 0}
+--- !u!1 &571742584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 571742585}
+  - component: {fileID: 571742586}
+  m_Layer: 0
+  m_Name: City Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &571742585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571742584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &571742586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571742584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368fea19ad4bf43429bc53d0a97ef3fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streetPrefabs:
+  - prefab: {fileID: 1081836597754396532, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
+    weight: 0
+  - prefab: {fileID: 6921335115686563375, guid: 9905e0fcb3a08c3498d52e009545db0e, type: 3}
+    weight: 0
+  - prefab: {fileID: 7596758016583214426, guid: a07cba706c73eed4abf9bc6e413cfe9d, type: 3}
+    weight: 10
+  - prefab: {fileID: 962678162421597057, guid: ffcf7ad404bdb524993c89b9b5a38cd2, type: 3}
+    weight: 0
+  citySizeInTiles: {x: 2, y: 2}
 --- !u!1 &673682859
 GameObject:
   m_ObjectHideFlags: 0
@@ -797,6 +850,7 @@ GameObject:
   - component: {fileID: 682864941}
   - component: {fileID: 682864940}
   - component: {fileID: 682864939}
+  - component: {fileID: 682864943}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -885,6 +939,35 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &682864943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682864938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a464b1d0c95ee9d459caf7ed8341e186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 682864941}
+  noteInputField: {fileID: 1894734365}
+  levelCategoryPrefabs:
+    buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
+    panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
+  levelTopicPrefabs:
+    buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
+    panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
+  levelEntryPrefabs:
+    buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
+    panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
+  levelActPrefabs:
+    buttonPrefab: {fileID: 1215076350371478653, guid: d1f66d3ca1a40e24187b8d154a0e48c4, type: 3}
+    panelPrefab: {fileID: 3065363199674766596, guid: e88e51a26145bf147bad3a7673bf96f9, type: 3}
+  levelNotePrefabs:
+    buttonPrefab: {fileID: 0}
+    panelPrefab: {fileID: 1155940735901452660, guid: 9ce3746fe651eff479de06bd6f24378a, type: 3}
 --- !u!1 &741597946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,7 +1248,6 @@ GameObject:
   m_Component:
   - component: {fileID: 923419752}
   - component: {fileID: 923419751}
-  - component: {fileID: 923419753}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1185,8 +1267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc6e2fa09a9f9e4c93ab59e88e56232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoLoad: 1
-  autoSave: 1
+  autoLoad: 0
+  autoSave: 0
   saveData:
     codex:
       categories:
@@ -1269,6 +1351,7 @@ MonoBehaviour:
         notes: []
       act4:
         notes: []
+  uiManager: {fileID: 682864943}
   entry1A1Image: {fileID: 21300000, guid: d15af4914faf86549b4add6a8badf7a8, type: 3}
 --- !u!4 &923419752
 Transform:
@@ -1284,35 +1367,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &923419753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923419750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a464b1d0c95ee9d459caf7ed8341e186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 682864941}
-  noteInputField: {fileID: 1894734365}
-  levelCategoryPrefabs:
-    buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
-    panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
-  levelTopicPrefabs:
-    buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
-    panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
-  levelEntryPrefabs:
-    buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
-    panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
-  levelActPrefabs:
-    buttonPrefab: {fileID: 1215076350371478653, guid: d1f66d3ca1a40e24187b8d154a0e48c4, type: 3}
-    panelPrefab: {fileID: 3065363199674766596, guid: e88e51a26145bf147bad3a7673bf96f9, type: 3}
-  levelNotePrefabs:
-    buttonPrefab: {fileID: 0}
-    panelPrefab: {fileID: 1155940735901452660, guid: 9ce3746fe651eff479de06bd6f24378a, type: 3}
 --- !u!1 &1006854552
 GameObject:
   m_ObjectHideFlags: 0

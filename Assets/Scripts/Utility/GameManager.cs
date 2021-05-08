@@ -9,17 +9,14 @@ public class GameManager : Singleton<GameManager>
     public bool autoSave;
     public SaveData saveData;
 
+    [Header("Managers")]
+    public UIManager uiManager;
+
     [Space]
     [Header("Default Fallback Info")]
     [SerializeField]
     private Sprite entry1A1Image = null;
 
-    private UIManager uiManager;
-
-    void Awake()
-    {
-        uiManager = GetComponent<UIManager>();
-    }
 
     void Start()
     {

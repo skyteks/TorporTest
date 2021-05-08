@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1081836597754396532, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
       propertyPath: m_Name
-      value: Cross
+      value: T Cross
       objectReference: {fileID: 0}
     - target: {fileID: 1081836597754396533, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,6 +66,10 @@ PrefabInstance:
     - target: {fileID: 1081836597754396533, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3328949754261670374, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
+      propertyPath: connections.Array.data[2].type
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4714ccc7fc42d4442aa6a43884500a49, type: 3}
