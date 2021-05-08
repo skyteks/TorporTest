@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CityGenerator : MonoBehaviour
+public interface ICityGen
+{
+    IEnumerator Generate();
+    void Clear();
+}
+
+public class CityGenerator : MonoBehaviour, ICityGen
 {
     [System.Serializable]
     public struct PrefabChance
@@ -38,17 +44,12 @@ public class CityGenerator : MonoBehaviour
 
     [Header("Prefabs")]
     public PrefabChance[] streetPrefabs;
-    private int totalStreetWeights;
-    private List<CityTile> tileInstances = new List<CityTile>();
+    protected int totalStreetWeights;
+    protected List<CityTile> tileInstances = new List<CityTile>();
     [Header("Size")]
     public Vector2Int citySizeInTiles;
-    private const int tileSize = 20;
+    protected const int tileSize = 20;
     private EmptyTileInfo[,] openConnections;
-
-    void Awake()
-    {
-
-    }
 
     void Start()
     {
@@ -86,17 +87,16 @@ public class CityGenerator : MonoBehaviour
             }
             bool fit = false;
             CityTile streetTile = null;
-            for (int i = 0; i < 5 && !fit; i++)
+            for (int i = 0; i < 50 && !fit; i++)
             {
-                int rnd = Random.Range(0, 4);
-                streetTile = Instantiate(GetRandomStreetPrefab(), (freeSpot.position * tileSize + Vector2Int.one * tileSize / 2).ToVector3XZ(), Quaternion.Euler(0f, rnd * 90f, 0f)).GetComponent<CityTile>();
+                streetTile = Instantiate(GetRandomStreetPrefab(), (freeSpot.position * tileSize + Vector2Int.one * tileSize / 2).ToVector3XZ(), Quaternion.identity).GetComponent<CityTile>();
                 streetTile.transform.SetParent(transform);
 
                 for (int rot = 0; rot <= 4 && !fit; rot++)
                 {
                     if (rot != 0)
                     {
-                        streetTile.transform.Rotate(0f, 90f, 0f);
+                        streetTile.transform.Rotate(0f, -90f, 0f);
                         streetTile.Rotate90();
                     }
                     fit = CheckIfRoomFits(freeSpot.position, streetTile);
@@ -134,7 +134,7 @@ public class CityGenerator : MonoBehaviour
         totalStreetWeights = 0;
     }
 
-    private GameObject GetRandomStreetPrefab()
+    protected GameObject GetRandomStreetPrefab()
     {
         if (totalStreetWeights == 0)
         {
@@ -198,7 +198,7 @@ public class CityGenerator : MonoBehaviour
                     tileInfo.leftType = right;
                     break;
                 case CityTile.Connection.Side.Bottom:
-                    tmpPos.x--;
+                    tmpPos.y--;
                     tileInfo = GetOrCreateOpenConnection(tmpPos);
                     if (tileInfo == null)
                     {
@@ -207,7 +207,7 @@ public class CityGenerator : MonoBehaviour
                     tileInfo.topType = bottom;
                     break;
                 case CityTile.Connection.Side.Left:
-                    tmpPos.y--;
+                    tmpPos.x--;
                     tileInfo = GetOrCreateOpenConnection(tmpPos);
                     if (tileInfo == null)
                     {
@@ -217,8 +217,6 @@ public class CityGenerator : MonoBehaviour
                     break;
             }
         }
-
-
     }
 
     private SimpleTileInfo GetOrCreateOpenConnection(Vector2Int tmpPos)

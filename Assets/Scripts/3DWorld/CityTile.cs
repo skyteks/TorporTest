@@ -45,15 +45,6 @@ public class CityTile : MonoBehaviour
 
     public Connection[] connections = new Connection[4];
 
-    void Awake()
-    {
-        int yRot = Mathf.RoundToInt(transform.rotation.eulerAngles.y) % 360;
-        for (int angle = yRot; angle > 0; angle -= 90)
-        {
-            Rotate90();
-        }
-    }
-
     [ContextMenu("Rotate 90°")]
     public void Rotate90()
     {
@@ -62,20 +53,16 @@ public class CityTile : MonoBehaviour
             switch (connection.side)
             {
                 case Connection.Side.Top:
-                    connection.side = Connection.Side.Left;
-                    connection.position = new Vector2(-connection.position.y, connection.position.x);
+                    connection.side = Connection.Side.Right;
                     break;
                 case Connection.Side.Right:
-                    connection.side = Connection.Side.Top;
-                    connection.position = new Vector2(connection.position.y, -connection.position.x);
+                    connection.side = Connection.Side.Bottom;
                     break;
                 case Connection.Side.Bottom:
-                    connection.side = Connection.Side.Right;
-                    connection.position = new Vector2(-connection.position.y, connection.position.x);
+                    connection.side = Connection.Side.Left;
                     break;
                 case Connection.Side.Left:
-                    connection.side = Connection.Side.Bottom;
-                    connection.position = new Vector2(connection.position.y, -connection.position.x);
+                    connection.side = Connection.Side.Top;
                     break;
             }
         }
