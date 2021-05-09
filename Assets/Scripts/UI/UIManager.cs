@@ -38,7 +38,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public Canvas canvas;
+    public Button menuButton;
     public InputField noteInputField;
 
     [Space]
@@ -49,6 +49,15 @@ public class UIManager : MonoBehaviour
     [Space]
     public TabLevelPrefabs levelActPrefabs;
     public TabLevelPrefabs levelNotePrefabs;
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            gameObject.SetActive(false);
+            menuButton.gameObject.SetActive(true);
+        }
+    }
 
     public void PreviewData(SaveData data)
     {
@@ -87,12 +96,12 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        TabButton[] tabButtons = canvas.GetComponentsInChildren<TabButton>(true);
+        TabButton[] tabButtons = transform.GetComponentsInChildren<TabButton>(true);
         foreach (var button in tabButtons)
         {
             button.Init();
         }
-        TabGroup[] tabGroups = canvas.GetComponentsInChildren<TabGroup>(true);
+        TabGroup[] tabGroups = transform.GetComponentsInChildren<TabGroup>(true);
         foreach (var tab in tabGroups)
         {
             tab.ResetTabs(true);
@@ -168,7 +177,7 @@ public class UIManager : MonoBehaviour
 
     private TabLevelHolders GetHolderReferences(SaveData.Levels level, bool noButton = false)
     {
-        ChildHolderReference[] foundReferences = canvas.GetComponentsInChildren<ChildHolderReference>();
+        ChildHolderReference[] foundReferences = transform.GetComponentsInChildren<ChildHolderReference>(true);
         ChildHolderReference buttonsReference = null;
         ChildHolderReference panelsReference = null;
         for (int i = 0; i < foundReferences.Length; i++)
@@ -202,4 +211,6 @@ public class UIManager : MonoBehaviour
         }
         return new TabLevelHolders(buttonsReference, panelsReference);
     }
+
+
 }

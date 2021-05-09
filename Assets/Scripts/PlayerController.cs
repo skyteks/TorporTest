@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,9 +19,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!GameManager.Instance.uiManager.gameObject.activeSelf && EventSystem.current.currentSelectedGameObject == null)
         {
-            CastWalkRaycast();
+            if (Input.GetMouseButtonDown(0))
+            {
+                CastWalkRaycast();
+            }
         }
     }
 
