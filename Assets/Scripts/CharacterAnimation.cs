@@ -19,10 +19,13 @@ public class CharacterAnimation : MonoBehaviour
     private Animator anim;
 
     public float velocityToWalkSpeedScale = 0.1f;
+    public float steeringLerpMultiplyer = 5f;
+    private float lastAngle;
 
 #if UNITY_EDITOR
     [Header("Editor")]
-    public bool drawSteeringAngle;
+    public bool drawSteeringAngle = true;
+    public bool drawLerpedAngle = true;
 #endif
 
     void Awake()
@@ -35,21 +38,33 @@ public class CharacterAnimation : MonoBehaviour
     {
         anim.SetFloat(hashForward, agent.velocity.magnitude * velocityToWalkSpeedScale);
         float angle = Vector3.SignedAngle(transform.forward, (agent.steeringTarget - transform.position).normalized, Vector3.up);
+        angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * steeringLerpMultiplyer);
         anim.SetFloat(hashTurn, angle * 0.01f);
+        lastAngle = angle;
     }
 
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        if (Application.isPlaying && drawSteeringAngle)
+        if (Application.isPlaying)
         {
-            Gizmos.color = Color.green;
-            Color color = Color.green;
-            color.a = 0.2f;
             float angle = Vector3.SignedAngle(transform.forward, (agent.steeringTarget - transform.position).normalized, Vector3.up);
-            UnityEditor.Handles.color = color;
-            UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angle, 2f);
-            Gizmos.DrawSphere(agent.steeringTarget, 0.1f);
+            if (drawSteeringAngle)
+            {
+                Color color2 = Color.red;
+                color2.a = 0.1f;
+                UnityEditor.Handles.color = color2;
+                UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angle, 3f);
+            }
+            if (drawLerpedAngle)
+            {
+                angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * steeringLerpMultiplyer);
+
+                Color color1 = Color.green;
+                color1.a = 0.2f;
+                UnityEditor.Handles.color = color1;
+                UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angle, 2f);
+            }
         }
     }
 #endif
