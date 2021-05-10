@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseController : MonoBehaviour
 {
-    protected CharacterMovement movement;
+    public CharacterMovement movement { get; private set; }
 
     protected virtual void Awake()
     {

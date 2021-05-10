@@ -20,6 +20,8 @@ public class CharacterAnimation : MonoBehaviour
 
     public float velocityToWalkSpeedScale = 0.1f;
     public float steeringLerpMultiplyer = 5f;
+
+    public float steeringAngle { private get; set; }
     private float lastAngle;
 
 #if UNITY_EDITOR
@@ -37,10 +39,9 @@ public class CharacterAnimation : MonoBehaviour
     void LateUpdate()
     {
         anim.SetFloat(hashForward, agent.velocity.magnitude * velocityToWalkSpeedScale);
-        float angle = Vector3.SignedAngle(transform.forward, (agent.steeringTarget - transform.position).normalized, Vector3.up);
-        angle = Mathf.Lerp(lastAngle, angle, Time.deltaTime * steeringLerpMultiplyer);
-        anim.SetFloat(hashTurn, angle * 0.01f);
-        lastAngle = angle;
+        steeringAngle = Mathf.Lerp(lastAngle, steeringAngle, Time.deltaTime * steeringLerpMultiplyer);
+        anim.SetFloat(hashTurn, steeringAngle * 0.01f);
+        lastAngle = steeringAngle;
     }
 
 #if UNITY_EDITOR
@@ -48,7 +49,7 @@ public class CharacterAnimation : MonoBehaviour
     {
         if (Application.isPlaying)
         {
-            float angle = Vector3.SignedAngle(transform.forward, (agent.steeringTarget - transform.position).normalized, Vector3.up);
+            float angle = steeringAngle;
             if (drawSteeringAngle)
             {
                 Color color2 = Color.red;

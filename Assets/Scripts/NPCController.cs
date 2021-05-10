@@ -7,11 +7,13 @@ public class NPCController : BaseController
 {
     public enum NPCStates
     {
+        Stopped,
         WalkingArround,
         Talking,
     }
 
     public NPCStates state;
+    public Color stoppedColor = Color.red;
     public Color walkingColor = Color.yellow;
     public Color talkingColor = Color.green;
 
@@ -19,11 +21,18 @@ public class NPCController : BaseController
     private int walkingIndex;
     private bool arrivalSubscribed;
 
+#if UNITY_EDITOR
+    [Header("Editor")]
+    public bool drawWalkingCircle = true;
+    public bool drawOtherWalkingPoints = true;
+#endif
+
     void Start()
     {
         SwitchState(state);
     }
 
+#if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
         switch (state)
@@ -36,21 +45,30 @@ public class NPCController : BaseController
                         Vector3 point = walkingPoints[i];
 
                         Gizmos.color = Color.yellow;
-                        Vector3 next = walkingPoints[(i + 1) % walkingPoints.Length];
-                        Gizmos.DrawLine(next, point);
+                        if (drawWalkingCircle)
+                        {
+                            Vector3 next = walkingPoints[(i + 1) % walkingPoints.Length];
+                            Gizmos.DrawLine(next, point);
+                        }
                         if (i == walkingIndex)
                         {
                             Gizmos.color = Color.red;
                             Gizmos.DrawLine(transform.position, point);
                         }
-                        Gizmos.DrawSphere(point, 0.2f);
+                        if (i != walkingIndex ? drawOtherWalkingPoints : true)
+                        {
+                            Gizmos.DrawSphere(point, 0.2f);
+                        }
                     }
                 }
                 break;
             case NPCStates.Talking:
                 break;
+            case NPCStates.Stopped:
+                break;
         }
     }
+#endif
 
     public void SwitchState(NPCStates newState)
     {
@@ -58,10 +76,14 @@ public class NPCController : BaseController
         switch (state)
         {
             case NPCStates.WalkingArround:
-                WalkFromPointToPoint();
+                ArrivalSubscribe();
+                WalkToNextPoint();
                 break;
             case NPCStates.Talking:
-                arrivalSubscribed = false;
+                ArrivalUnsubscribe();
+                break;
+            case NPCStates.Stopped:
+                ArrivalUnsubscribe();
                 break;
         }
         SetStateColor();
@@ -78,6 +100,9 @@ public class NPCController : BaseController
             case NPCStates.Talking:
                 newColor = talkingColor;
                 break;
+            case NPCStates.Stopped:
+                newColor = stoppedColor;
+                break;
             default:
                 throw new ArgumentException();
         }
@@ -90,13 +115,6 @@ public class NPCController : BaseController
             propertyBlock.SetColor("_Color", newColor);
             render.SetPropertyBlock(propertyBlock);
         }
-    }
-
-    private void WalkFromPointToPoint()
-    {
-        ArrivalSubscribe();
-
-        WalkToNextPoint();
     }
 
     private void OnArrived()
@@ -115,7 +133,6 @@ public class NPCController : BaseController
     {
         if (arrivalSubscribed)
         {
-            Debug.LogError("Already subscribed to Arrival Event");
             return;
         }
         movement.onArrived.AddListener(OnArrived);
@@ -126,7 +143,6 @@ public class NPCController : BaseController
     {
         if (!arrivalSubscribed)
         {
-            Debug.LogError("Already unsubscribed to Arrival Event");
             return;
         }
         movement.onArrived.RemoveListener(OnArrived);
