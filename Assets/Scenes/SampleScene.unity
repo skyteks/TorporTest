@@ -186,6 +186,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 7e15121f5f042ed46aba81406403f2d2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ae9f2c85844955a4984a048ba39e5573, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e15121f5f042ed46aba81406403f2d2, type: 3}
 --- !u!4 &63948183 stripped
@@ -3924,6 +3928,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 7e15121f5f042ed46aba81406403f2d2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ae9f2c85844955a4984a048ba39e5573, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e15121f5f042ed46aba81406403f2d2, type: 3}
 --- !u!1001 &1483066798
@@ -4296,6 +4304,7 @@ GameObject:
   - component: {fileID: 1624848197}
   - component: {fileID: 1624848196}
   - component: {fileID: 1624848195}
+  - component: {fileID: 1624848200}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -4347,6 +4356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c377654ae434a048b1bd78927bc0566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onArrived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!195 &1624848198
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4357,7 +4369,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.3
-  m_Speed: 4
+  m_Speed: 1
   m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 2000
@@ -4384,6 +4396,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1624848200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624848194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c177e8a279ef574992ff140885df0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+  walkingColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  talkingColor: {r: 0, g: 1, b: 0, a: 1}
+  walkingPoints:
+  - {x: 8.61, y: 0, z: -8.56}
+  - {x: 8.61, y: 0, z: 8.53}
+  - {x: 51.68, y: 0, z: 8.53}
+  - {x: 51.68, y: 0, z: -8.56}
 --- !u!1 &1625742333
 GameObject:
   m_ObjectHideFlags: 0
@@ -5567,6 +5599,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c377654ae434a048b1bd78927bc0566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onArrived:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2029528523
 MonoBehaviour:
   m_ObjectHideFlags: 0

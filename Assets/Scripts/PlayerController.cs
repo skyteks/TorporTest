@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
     public LayerMask walkRaycastMask;
 
     private new Camera camera;
-    private CharacterMovement movement;
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
         camera = Camera.main;
-        movement = GetComponent<CharacterMovement>();
     }
 
     void Update()
