@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class NPCController : BaseController
 {
     public enum NPCStates
@@ -16,6 +17,7 @@ public class NPCController : BaseController
     public Color stoppedColor = Color.red;
     public Color walkingColor = Color.yellow;
     public Color talkingColor = Color.green;
+    private NPCStates oldState;
 
     public Vector3[] walkingPoints;
     private int walkingIndex;
@@ -70,8 +72,9 @@ public class NPCController : BaseController
     }
 #endif
 
-    public void SwitchState(NPCStates newState)
+    private void SwitchState(NPCStates newState)
     {
+        oldState = state;
         state = newState;
         switch (state)
         {
@@ -147,5 +150,17 @@ public class NPCController : BaseController
         }
         movement.onArrived.RemoveListener(OnArrived);
         arrivalSubscribed = false;
+    }
+
+    public void Interacting(PlayerController player)
+    {
+        SwitchState(NPCStates.Stopped);
+        movement.Stop();
+        movement.RotateTowards(player.transform.position);
+    }
+
+    public void StopInteracting()
+    {
+        SwitchState(oldState);
     }
 }

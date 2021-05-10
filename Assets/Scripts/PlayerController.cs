@@ -12,6 +12,7 @@ public class PlayerController : BaseController
     private new Camera camera;
 
     private Coroutine goToNPCRoutine;
+    private NPCController interactingWith;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -66,6 +67,9 @@ public class PlayerController : BaseController
             }
             else
             {
+                interactingWith?.StopInteracting();
+                interactingWith = null;
+
                 movement.GoTo(hit.point);
                 Debug.DrawLine(ray.origin, hit.point, Color.cyan, 0.1f);
             }
@@ -97,12 +101,10 @@ public class PlayerController : BaseController
 
     private void InteractWithNPC(NPCController npc)
     {
-        npc.SwitchState(NPCController.NPCStates.Stopped);
-
         movement.Stop();
-        npc.movement.Stop();
-
         movement.RotateTowards(npc.transform.position);
-        npc.movement.RotateTowards(transform.position);
+
+        npc.Interacting(this);
+        interactingWith = npc;
     }
 }
