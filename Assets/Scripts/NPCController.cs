@@ -19,6 +19,8 @@ public class NPCController : BaseController
     public Color talkingColor = Color.green;
     private NPCStates oldState;
 
+    private NPCSpeechBubble speechBubble;
+
     public Vector3[] walkingPoints;
     private int walkingIndex;
     private bool arrivalSubscribed;
@@ -28,6 +30,12 @@ public class NPCController : BaseController
     public bool drawWalkingCircle = true;
     public bool drawOtherWalkingPoints = true;
 #endif
+
+    protected override void Awake()
+    {
+        base.Awake();
+        speechBubble = GetComponent<NPCSpeechBubble>();
+    }
 
     void Start()
     {
@@ -157,6 +165,8 @@ public class NPCController : BaseController
         SwitchState(NPCStates.Stopped);
         movement.Stop();
         movement.RotateTowards(player.transform.position);
+
+        speechBubble.DoSpeech("Hello?\nWhat can I do for you?");
     }
 
     public void StopInteracting()
