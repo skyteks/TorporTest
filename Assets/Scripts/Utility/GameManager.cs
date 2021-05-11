@@ -148,4 +148,9 @@ public class GameManager : Singleton<GameManager>
         SaveData.Notes.Act act = saveData.notes.GetChildren()[actIndex] as SaveData.Notes.Act;
         act.notes.RemoveAt(index);
     }
+
+    public void SetTimeScale(float value)
+    {
+        Time.timeScale = value;
+    }
 }

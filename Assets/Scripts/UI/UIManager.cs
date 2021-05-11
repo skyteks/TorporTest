@@ -56,6 +56,7 @@ public class UIManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             menuButton.gameObject.SetActive(true);
+            GameManager.Instance.SetTimeScale(1f);
         }
     }
 
