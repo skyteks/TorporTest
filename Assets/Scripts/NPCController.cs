@@ -8,21 +8,26 @@ public class NPCController : BaseController
 {
     public enum NPCStates
     {
-        Stopped,
+        None,
         WalkingArround,
         Talking,
+        GivingQuests,
     }
 
     public NPCStates state;
-    public Color stoppedColor = Color.red;
-    public Color walkingColor = Color.yellow;
+    public Color walkingColor = Color.cyan;
     public Color talkingColor = Color.green;
-    private NPCStates oldState;
+    public Color questGivingColor = Color.Lerp(Color.yellow, Color.red, 0.5f);
+
+    [Header("Interacting with Player")]
+    public bool canBeInteractedWith;
+    private bool isInteracting;
+    [TextArea]
+    public string interactionText;
 
     [Header("Walking Behavior")]
     public Vector3[] walkingPoints;
     private int walkingIndex;
-    private bool arrivalSubscribed;
 
     [Header("Talking Behavior")]
     public NPCController talkingPartner;
@@ -31,7 +36,10 @@ public class NPCController : BaseController
     public string[] talkingSpeeches;
     private int talkingIndex;
     private NPCSpeechBubble speechBubble;
-    private bool spokenArrived;
+
+    [Header("Quest Giving Behavior")]
+    public GameObject questionmarkSymbol;
+    public bool giveQuestDirectly;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -82,35 +90,65 @@ public class NPCController : BaseController
                 break;
             case NPCStates.Talking:
                 break;
-            case NPCStates.Stopped:
+            case NPCStates.None:
+                break;
+            case NPCStates.GivingQuests:
                 break;
         }
     }
 #endif
 
+    private void SwitchInteracting(bool interactingWithPlayer)
+    {
+        isInteracting = interactingWithPlayer;
+        ResetStateFunctionality();
+        SetNewStateFunctionality();
+    }
+
     private void SwitchState(NPCStates newState)
     {
-        oldState = state;
         state = newState;
-        ArrivalUnsubscribe();
-        SpokenUnsubscibe();
+        ResetStateFunctionality();
+        SetNewStateFunctionality();
+    }
+
+    private void ResetStateFunctionality()
+    {
+        ArrivalSubscribeToggle(false);
+        SpokenSubscibeToggle(false);
+
+        if (state != NPCStates.GivingQuests)
+        {
+            ToggleQuestionmarkSymbol(false);
+        }
+    }
+
+    private void SetNewStateFunctionality()
+    {
+        SetStateColor();
+        if (isInteracting)
+        {
+            return;
+        }
         switch (state)
         {
             case NPCStates.WalkingArround:
-                ArrivalSubscribe();
+                ArrivalSubscribeToggle(true);
                 WalkToNextPoint();
                 break;
             case NPCStates.Talking:
-                SpokenSubscibe();
+                SpokenSubscibeToggle(true);
                 if (talkingFirst)
                 {
-                    TalkAgain();
+                    TalkAgainToPartner();
                 }
                 break;
-            case NPCStates.Stopped:
+            case NPCStates.None:
+                break;
+            case NPCStates.GivingQuests:
+                ToggleQuestionmarkSymbol(true);
                 break;
         }
-        SetStateColor();
     }
 
     private void SetStateColor()
@@ -124,8 +162,11 @@ public class NPCController : BaseController
             case NPCStates.Talking:
                 newColor = talkingColor;
                 break;
-            case NPCStates.Stopped:
-                newColor = stoppedColor;
+            case NPCStates.None:
+                newColor = Color.gray;
+                break;
+            case NPCStates.GivingQuests:
+                newColor = questGivingColor;
                 break;
             default:
                 throw new ArgumentException();
@@ -153,69 +194,70 @@ public class NPCController : BaseController
         movement.GoTo(point);
     }
 
-    private void ArrivalSubscribe()
+    private void ArrivalSubscribeToggle(bool toggle)
     {
-        if (arrivalSubscribed)
+        if (toggle)
         {
-            return;
+            movement.onArrived.AddListener(OnArrived);
         }
-        movement.onArrived.AddListener(OnArrived);
-        arrivalSubscribed = true;
+        else
+        {
+            movement.onArrived.RemoveListener(OnArrived);
+        }
     }
 
-    private void ArrivalUnsubscribe()
+    private void SpokenSubscibeToggle(bool toggle)
     {
-        if (!arrivalSubscribed)
+        if (toggle)
         {
-            return;
+            speechBubble.onSpeechOver.AddListener(OnFinishTalkingToPartner);
         }
-        movement.onArrived.RemoveListener(OnArrived);
-        arrivalSubscribed = false;
-    }
-
-    private void SpokenSubscibe()
-    {
-        if (spokenArrived)
+        else
         {
-            return;
+            speechBubble.onSpeechOver.RemoveListener(OnFinishTalkingToPartner);
         }
-        speechBubble.onSpeechOver.AddListener(OnFinishTalking);
-        spokenArrived = true;
-    }
-
-    private void SpokenUnsubscibe()
-    {
-        if (!spokenArrived)
-        {
-            return;
-        }
-        speechBubble.onSpeechOver.RemoveListener(OnFinishTalking);
-        spokenArrived = false;
     }
 
     public void Interacting(PlayerController player)
     {
+        if (!canBeInteractedWith)
+        {
+            return;
+        }
 
         StopTalking();
         talkingPartner?.StopTalking();
 
-        SwitchState(NPCStates.Stopped);
+        SwitchInteracting(true);
 
         movement.Stop();
         movement.RotateTowards(player.transform.position);
 
-        ArrivalUnsubscribe();
-        SpokenUnsubscibe();
+        ArrivalSubscribeToggle(false);
+        SpokenSubscibeToggle(false);
 
-        speechBubble.DoSpeech("Hello?\nWhat can I do for you?");
+        if (state == NPCStates.GivingQuests)
+        {
+            if (giveQuestDirectly)
+            {
+                TryGivingQuestToPlayer();
+                return;
+            }
+            else
+            {
+                speechBubble.onSpeechOver.AddListener(TryGivingQuestToPlayer);
+            }
+        }
+
+        speechBubble.DoSpeech(interactionText);
     }
 
     public void StopInteracting()
     {
-        SwitchState(oldState);
+        SwitchInteracting(false);
     }
 
-    public void TalkAgain()
+    public void TalkAgainToPartner()
     {
         talkingFirst = true;
         RotateTowardsTalkingPartner();
@@ -223,11 +265,11 @@ public class NPCController : BaseController
         speechBubble.DoSpeech(talkingSpeeches[talkingIndex]);
     }
 
-    public void OnFinishTalking()
+    public void OnFinishTalkingToPartner()
     {
         talkingIndex = (talkingIndex + 1) % talkingSpeeches.Length;
         talkingFirst = false;
-        talkingPartner.TalkAgain();
+        talkingPartner.TalkAgainToPartner();
     }
 
     public void StopTalking()
@@ -243,5 +285,16 @@ public class NPCController : BaseController
     public void OnNearPlayer(bool enter)
     {
         speechBubble.SetBubbleVisibility(enter);
+    }
+
+    private void ToggleQuestionmarkSymbol(bool toggle)
+    {
+        questionmarkSymbol?.SetActive(toggle);
+    }
+
+    private void TryGivingQuestToPlayer()
+    {
+        speechBubble.onSpeechOver.RemoveListener(TryGivingQuestToPlayer);
+        print("HERE IS A QUEST");
     }
 }

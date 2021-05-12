@@ -99,7 +99,9 @@ public class CharacterMovement : MonoBehaviour
 
     private IEnumerator Rotate(Vector3 point)
     {
-        Vector3 vector = (point - transform.position).normalized;
+        Vector3 vector = (point - transform.position);
+        vector.y = 0f;
+        vector.Normalize();
         Quaternion angleRot = Quaternion.LookRotation(vector, Vector3.up);
         while (Vector3.Angle(transform.forward, vector) > 1f)
         {
