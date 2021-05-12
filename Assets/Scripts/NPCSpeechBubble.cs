@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,8 +11,11 @@ public class NPCSpeechBubble : MonoBehaviour
     private Text speechText;
     public float speed = 4f;
     private Coroutine runSpeech;
+    private bool bubbleActive;
 
     public UnityEvent onSpeechOver;
+
+    private bool bubbleVisible;
 
     void Awake()
     {
@@ -24,8 +28,19 @@ public class NPCSpeechBubble : MonoBehaviour
 
     void Start()
     {
-        canvas.gameObject.SetActive(false);
         speechText.text = "";
+        UpdateBubbleVisibility();
+    }
+
+    public void SetBubbleVisibility(bool state)
+    {
+        bubbleVisible = state;
+        UpdateBubbleVisibility();
+    }
+
+    private void UpdateBubbleVisibility()
+    {
+        canvas.gameObject.SetActive(bubbleActive && bubbleVisible);
     }
 
     public void DoSpeech(string speech)
@@ -36,18 +51,28 @@ public class NPCSpeechBubble : MonoBehaviour
     private IEnumerator RunSpeechSlowly(string speech, float runSpeed)
     {
         speechText.text = "";
-        canvas.gameObject.SetActive(true);
-
+        bubbleActive = true;
+        UpdateBubbleVisibility();
         runSpeed = 1f / runSpeed;
         for (int i = 0; i < speech.Length; i++)
         {
             speechText.text = string.Concat(speechText.text, speech[i]);
             yield return new WaitForSeconds(runSpeed);
         }
-        onSpeechOver?.Invoke();
-
         yield return new WaitForSeconds(2f);
-        canvas.gameObject.SetActive(false);
+        onSpeechOver?.Invoke();
+        StopSpeech();
+    }
+
+    public void StopSpeech()
+    {
+        if (runSpeech != null)
+        {
+            StopCoroutine(runSpeech);
+        }
+        speechText.text = "";
+        bubbleActive = false;
+        UpdateBubbleVisibility();
         runSpeech = null;
     }
 }

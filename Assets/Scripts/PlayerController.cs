@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : BaseController
 {
+    public static PlayerController simpleInstance { get; private set; }
+
     public LayerMask walkRaycastMask;
     public float interactingDistance = 1f;
 
@@ -14,6 +16,8 @@ public class PlayerController : BaseController
     private Coroutine goToNPCRoutine;
     private NPCController interactingWith;
 
+    public float listeningRadius;
+
 #if UNITY_EDITOR
     [Header("Editor")]
     public bool drawInteractingDistance = true;
@@ -21,6 +25,11 @@ public class PlayerController : BaseController
 
     protected override void Awake()
     {
+        if (simpleInstance != null)
+        {
+            throw new System.Exception("There should only be one player object");
+        }
+        simpleInstance = this;
         base.Awake();
         camera = Camera.main;
     }

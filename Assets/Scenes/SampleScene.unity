@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3287114642382195503, guid: 4ba875a55df111a4e975aa089ca1f954, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.37
       objectReference: {fileID: 0}
     - target: {fileID: 3287114642382195503, guid: 4ba875a55df111a4e975aa089ca1f954, type: 3}
       propertyPath: m_LocalPosition.y
@@ -144,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3287114642382195503, guid: 4ba875a55df111a4e975aa089ca1f954, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10.47
       objectReference: {fileID: 0}
     - target: {fileID: 3287114642382195503, guid: 4ba875a55df111a4e975aa089ca1f954, type: 3}
       propertyPath: m_LocalRotation.x
@@ -360,6 +360,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: state
       value: 2
       objectReference: {fileID: 0}
@@ -395,6 +399,35 @@ PrefabInstance:
       propertyPath: walkingPoints.Array.data[3].z
       value: -8.56
       objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[0]
+      value: Hi, not much, mostly sitting at home all day. Because of this Virus.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[1]
+      value: 'Yeah, I feel that. But not so sure about the surviving part of that.
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[2]
+      value: Yeah, also internet is still up. That probably wouldn't be a thing in
+        a post apocalyptic world.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[3]
+      value: By the way, go check out my latest video on youtube. I am working on
+        my gamedev project again.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[4]
+      value: Thanks man, I've been working on that for quite a while now, and learned
+        lot's new stuff.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingPartner
+      value: 
+      objectReference: {fileID: 1980527969}
     - target: {fileID: 3573829660496238130, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.07
@@ -1055,6 +1088,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405099120}
   m_CullTransparentMesh: 0
+--- !u!114 &439215626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+  m_PrefabInstance: {fileID: 244848578}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c177e8a279ef574992ff140885df0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &467256717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3769,6 +3813,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: state
       value: 2
       objectReference: {fileID: 0}
@@ -3803,6 +3851,37 @@ PrefabInstance:
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: walkingPoints.Array.data[3].z
       value: -8.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[0]
+      value: Hey there what have you been up to lately? Haven't heard from you in
+        a while.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[1]
+      value: Ya damn this pandemic is the most boring thing ever. I'd rather have
+        a zombie apocalypse.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[2]
+      value: Well, true... I suppose dying of boredom is less painfull than getting
+        your brain eaten.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[3]
+      value: Oh ye, no way I could live without Online Games or Netflix by now.
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingSpeeches.Array.data[4]
+      value: Woah nice. The RTS one? Good luck with that project!
+      objectReference: {fileID: 0}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingPartner
+      value: 
+      objectReference: {fileID: 439215626}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: talkingFirst
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3573829660496238130, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5606,6 +5685,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7596758016583214427, guid: a07cba706c73eed4abf9bc6e413cfe9d, type: 3}
   m_PrefabInstance: {fileID: 1948836159}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1980527969 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+  m_PrefabInstance: {fileID: 1240990517}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c177e8a279ef574992ff140885df0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2047961388
 PrefabInstance:
   m_ObjectHideFlags: 0

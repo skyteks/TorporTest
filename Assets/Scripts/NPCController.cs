@@ -19,11 +19,19 @@ public class NPCController : BaseController
     public Color talkingColor = Color.green;
     private NPCStates oldState;
 
-    private NPCSpeechBubble speechBubble;
-
+    [Header("Walking Behavior")]
     public Vector3[] walkingPoints;
     private int walkingIndex;
     private bool arrivalSubscribed;
+
+    [Header("Talking Behavior")]
+    public NPCController talkingPartner;
+    public bool talkingFirst;
+    [TextArea]
+    public string[] talkingSpeeches;
+    private int talkingIndex;
+    private NPCSpeechBubble speechBubble;
+    private bool spokenArrived;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -84,6 +92,8 @@ public class NPCController : BaseController
     {
         oldState = state;
         state = newState;
+        ArrivalUnsubscribe();
+        SpokenUnsubscibe();
         switch (state)
         {
             case NPCStates.WalkingArround:
@@ -91,10 +101,13 @@ public class NPCController : BaseController
                 WalkToNextPoint();
                 break;
             case NPCStates.Talking:
-                ArrivalUnsubscribe();
+                SpokenSubscibe();
+                if (talkingFirst)
+                {
+                    TalkAgain();
+                }
                 break;
             case NPCStates.Stopped:
-                ArrivalUnsubscribe();
                 break;
         }
         SetStateColor();
@@ -160,11 +173,39 @@ public class NPCController : BaseController
         arrivalSubscribed = false;
     }
 
+    private void SpokenSubscibe()
+    {
+        if (spokenArrived)
+        {
+            return;
+        }
+        speechBubble.onSpeechOver.AddListener(OnFinishTalking);
+        spokenArrived = true;
+    }
+
+    private void SpokenUnsubscibe()
+    {
+        if (!spokenArrived)
+        {
+            return;
+        }
+        speechBubble.onSpeechOver.RemoveListener(OnFinishTalking);
+        spokenArrived = false;
+    }
+
     public void Interacting(PlayerController player)
     {
+
+        StopTalking();
+        talkingPartner?.StopTalking();
+
         SwitchState(NPCStates.Stopped);
+
         movement.Stop();
         movement.RotateTowards(player.transform.position);
+
+        ArrivalUnsubscribe();
+        SpokenUnsubscibe();
 
         speechBubble.DoSpeech("Hello?\nWhat can I do for you?");
     }
@@ -172,5 +213,35 @@ public class NPCController : BaseController
     public void StopInteracting()
     {
         SwitchState(oldState);
+    }
+
+    public void TalkAgain()
+    {
+        talkingFirst = true;
+        RotateTowardsTalkingPartner();
+        talkingPartner.RotateTowardsTalkingPartner();
+        speechBubble.DoSpeech(talkingSpeeches[talkingIndex]);
+    }
+
+    public void OnFinishTalking()
+    {
+        talkingIndex = (talkingIndex + 1) % talkingSpeeches.Length;
+        talkingFirst = false;
+        talkingPartner.TalkAgain();
+    }
+
+    public void StopTalking()
+    {
+        speechBubble.StopSpeech();
+    }
+
+    public void RotateTowardsTalkingPartner()
+    {
+        movement.RotateTowards(talkingPartner.transform.position);
+    }
+
+    public void OnNearPlayer(bool enter)
+    {
+        speechBubble.SetBubbleVisibility(enter);
     }
 }
