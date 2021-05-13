@@ -18,12 +18,14 @@ public class NPCController : BaseController
     public Color walkingColor = Color.cyan;
     public Color talkingColor = Color.green;
     public Color questGivingColor = Color.Lerp(Color.yellow, Color.red, 0.5f);
+    public Color questAnsweringColor = Color.red;
 
     [Header("Interacting with Player")]
     public bool canBeInteractedWith;
     private bool isInteracting;
     [TextArea]
     public string interactionText;
+    public Vector3 priorInteractionFacing;
 
     [Header("Walking Behavior")]
     public Vector3[] walkingPoints;
@@ -39,7 +41,9 @@ public class NPCController : BaseController
 
     [Header("Quest Giving Behavior")]
     public GameObject questionmarkSymbol;
-    public bool giveQuestDirectly;
+    public Quest quest;
+    public uint questAnsweringID;
+    private Quest answeringToQuest;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -171,6 +175,10 @@ public class NPCController : BaseController
             default:
                 throw new ArgumentException();
         }
+        if (answeringToQuest != null)
+        {
+            newColor = questAnsweringColor;
+        }
 
         Renderer render = GetComponentInChildren<Renderer>();
         if (render != null)
@@ -231,14 +239,25 @@ public class NPCController : BaseController
         SwitchInteracting(true);
 
         movement.Stop();
+        priorInteractionFacing = transform.forward;
         movement.RotateTowards(player.transform.position);
 
         ArrivalSubscribeToggle(false);
         SpokenSubscibeToggle(false);
 
-        if (state == NPCStates.GivingQuests)
+        if (answeringToQuest != null && answeringToQuest is InteractQuest)
         {
-            if (giveQuestDirectly)
+            speechBubble.onSpeechOver.AddListener(OnFinishedQuest);
+            speechBubble.DoSpeech((answeringToQuest as InteractQuest).rewardingReaction);
+            return;
+        }
+        else if (state == NPCStates.GivingQuests)
+        {
+            if (quest == null)
+            {
+                throw new UnassignedReferenceException("NPC doesn't have a quest");
+            }
+            if (quest.giveQuestDirectly)
             {
                 TryGivingQuestToPlayer();
                 return;
@@ -246,7 +265,9 @@ public class NPCController : BaseController
             else
             {
                 speechBubble.onSpeechOver.AddListener(TryGivingQuestToPlayer);
+                speechBubble.DoSpeech(quest.priorContractReaction);
             }
+            return;
         }
 
         speechBubble.DoSpeech(interactionText);
@@ -255,6 +276,13 @@ public class NPCController : BaseController
     public void StopInteracting()
     {
         SwitchInteracting(false);
+
+        StopTalking();
+
+        if (state != NPCStates.WalkingArround)
+        {
+            movement.RotateTowards(transform.position + priorInteractionFacing);
+        }
     }
 
     public void TalkAgainToPartner()
@@ -295,6 +323,36 @@ public class NPCController : BaseController
     private void TryGivingQuestToPlayer()
     {
         speechBubble.onSpeechOver.RemoveListener(TryGivingQuestToPlayer);
-        print("HERE IS A QUEST");
+        GameManager.Instance.TryGivingQuest(quest, OnQuestAcceptedOrDeclined);
+    }
+
+    private void OnQuestAcceptedOrDeclined(bool accepted)
+    {
+        StopTalking();
+
+        SwitchInteracting(true);
+
+        //movement.Stop();
+        //movement.RotateTowards(player.transform.position);
+
+        speechBubble.DoSpeech(accepted ? quest.acceptedReaction : quest.declinedReaction);
+
+        if (accepted)
+        {
+            GameManager.Instance.AddAcceptedQuest(quest);
+            SwitchState(NPCStates.None);
+        }
+    }
+
+    public void SetQuestAnswererActive(Quest answerToQuest)
+    {
+        answeringToQuest = answerToQuest;
+        SetStateColor();
+    }
+
+    private void OnFinishedQuest()
+    {
+        GameManager.Instance.RemoveFinishedQuest(answeringToQuest);
+        SetQuestAnswererActive(null);
     }
 }

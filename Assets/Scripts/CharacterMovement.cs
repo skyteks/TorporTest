@@ -102,7 +102,7 @@ public class CharacterMovement : MonoBehaviour
         Vector3 vector = (point - transform.position);
         vector.y = 0f;
         vector.Normalize();
-        Quaternion angleRot = Quaternion.LookRotation(vector, Vector3.up);
+        Quaternion angleRot = vector == Vector3.zero ? Quaternion.identity : Quaternion.LookRotation(vector, Vector3.up);
         while (Vector3.Angle(transform.forward, vector) > 1f)
         {
             Vector3 forwardBefore = transform.forward;

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private Sprite entry1A1Image = null;
 
+    private List<Quest> activeQuests = new List<Quest>();
 
     void Start()
     {
@@ -152,5 +154,30 @@ public class GameManager : Singleton<GameManager>
     public void SetTimeScale(float value)
     {
         Time.timeScale = value;
+    }
+
+    public void TryGivingQuest(Quest quest, UnityEngine.Events.UnityAction<bool> callback)
+    {
+        uiManager.ShowQuest(quest, callback);
+    }
+
+    public void AddAcceptedQuest(Quest quest)
+    {
+        activeQuests.Add(quest);
+
+        NPCController[] npcs = FindObjectsOfType<NPCController>();
+        foreach (var npc in npcs)
+        {
+            if (npc.questAnsweringID == quest.questAnsweringID)
+            {
+                npc.SetQuestAnswererActive(quest);
+                break;
+            }
+        }
+    }
+
+    public void RemoveFinishedQuest(Quest quest)
+    {
+        activeQuests.Remove(quest);
     }
 }

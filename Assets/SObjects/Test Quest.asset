@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf9ace2f9186c849b4d32ff0bb0e219, type: 3}
+  m_Name: Test Quest
+  m_EditorClassIdentifier: 
+  title: 
+  description: Go to this guy's friend and tell him his buddy here is still alive.
+  priorContractReaction: 'Hi there boy,
+
+    can you tell my friend on the other
+    side that I''m still alive?'
+  acceptedReaction: Thanks my boy, I wonder why he doesn't come over.
+  declinedReaction: 'Fine, then not.
+
+    Screw you!'
+  questAnsweringID: 111
+  rewardingReaction: 

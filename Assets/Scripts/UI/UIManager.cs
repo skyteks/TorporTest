@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
     }
 
     public Button menuButton;
+    public QuestContractUI questContract;
     public InputField noteInputField;
 
     [Space]
@@ -213,5 +214,8 @@ public class UIManager : MonoBehaviour
         return new TabLevelHolders(buttonsReference, panelsReference);
     }
 
-
+    public void ShowQuest(Quest quest, UnityEngine.Events.UnityAction<bool> callback)
+    {
+        questContract.Show(quest, callback);
+    }
 }
