@@ -47,5 +47,10 @@ namespace UnityEngine.UI
                 buttons[i].Deselect();
             }
         }
+
+        public TabButton GetButton(int index)
+        {
+            return buttons[index];
+        }
     }
 }

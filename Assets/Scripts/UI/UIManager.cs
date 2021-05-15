@@ -42,6 +42,7 @@ public class UIManager : Singleton<UIManager>
     public Button menuButton;
     public QuestContractUI questContract;
     public InputField noteInputField;
+    public AddNote addNoteScript;
 
     [Space]
     [Header("Prefabs")]
@@ -51,6 +52,8 @@ public class UIManager : Singleton<UIManager>
     [Space]
     public TabLevelPrefabs levelActPrefabs;
     public TabLevelPrefabs levelNotePrefabs;
+
+    private List<GameObject> prefabInstances = new List<GameObject>(); 
 
     void Update()
     {
@@ -62,8 +65,35 @@ public class UIManager : Singleton<UIManager>
         }
     }
 
+    public void ClearPreview()
+    {
+        for (int i = 0; i < prefabInstances.Count; i++)
+        {
+            if (prefabInstances[i] != null)
+            {
+                prefabInstances[i].SetActive(false);
+                prefabInstances[i].transform.SetParent(null);
+                Destroy(prefabInstances[i]);
+            }
+        }
+        prefabInstances.Clear();
+
+        ChildHolderReference[] foundReferences = uiPanel.GetComponentsInChildren<ChildHolderReference>(true);
+        for (int i = 0; i < foundReferences.Length; i++)
+        {
+            foundReferences[i].hasBeenUsed = false;
+        }
+
+        TabGroup[] tabGroups = uiPanel.GetComponentsInChildren<TabGroup>(true);
+        for (int i = 0; i < tabGroups.Length; i++)
+        {
+            tabGroups[i].ResetTabs(true);
+        }
+    }
+
     public void PreviewData(SaveData data)
     {
+        ClearPreview();
         SaveData.ITab[] categories = data.codex.GetChildren();
         TabLevelHolders levelCategoryHolders = GetHolderReferences(SaveData.Levels.Categories);
         for (int i = 0; i < categories.Length; i++)
@@ -117,10 +147,12 @@ public class UIManager : Singleton<UIManager>
         if (holders.buttonsHolder != null)
         {
             buttonInstance = Instantiate(prefabs.buttonPrefab, holders.buttonsHolder.transform);
+            prefabInstances.Add(buttonInstance);
             buttonInstance.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             buttonInstance.name = string.Concat(prefabs.buttonPrefab.name, "  ", tab.GetName());
         }
         GameObject panelInstance = Instantiate(prefabs.panelPrefab, holders.panelsHolder.transform);
+        prefabInstances.Add(panelInstance);
         panelInstance.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         panelInstance.name = string.Concat(prefabs.panelPrefab.name, "  ", tab.GetName());
 
@@ -223,5 +255,10 @@ public class UIManager : Singleton<UIManager>
     public bool IsAnyUIWindowActive()
     {
         return uiPanel.activeSelf || questContract.gameObject.activeSelf;
+    }
+
+    public void AddQuestAsNote(Quest quest)
+    {
+        addNoteScript.CreateNote(quest.title);
     }
 }

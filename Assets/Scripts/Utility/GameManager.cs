@@ -31,6 +31,16 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.PreviewData(saveData);
     }
 
+    void OnEnable()
+    {
+        EventManager.Instance.AddListener<GameEvent.QuestCompleted>(OnQuestCompleted);
+    }
+
+    void OnDisable()
+    {
+        EventManager.Instance.RemoveListener<GameEvent.QuestCompleted>(OnQuestCompleted);
+    }
+
     void OnApplicationQuit()
     {
         if (autoSave)
@@ -48,6 +58,14 @@ public class GameManager : Singleton<GameManager>
 
         SetDirty();
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("Console print Directory")]
+    private void PrintSaveDirectory()
+    {
+        Debug.Log(SaveManager.saveDirecty);
+    }
+#endif
 
     [ContextMenu("Save Data To File")]
     public void SaveDataToFile()
@@ -151,5 +169,23 @@ public class GameManager : Singleton<GameManager>
     public void SetTimeScale(float value)
     {
         Time.timeScale = value;
+    }
+
+    private void OnQuestCompleted(GameEvent.QuestCompleted e)
+    {
+        Quest quest = QuestManager.Instance.GetQuestWithID(e.questID);
+        AddNote(quest.title, 0);
+        
+        var tmpEntries = saveData.codex.categories[0].topics[0].entries;
+        var newEntries = new SaveData.Codex.Category.Topic.Entry[tmpEntries.Length + 1];
+        for (int i = 0; i < tmpEntries.Length; i++)
+        {
+            newEntries[i] = tmpEntries[i];
+        }
+        newEntries[tmpEntries.Length] = new SaveData.Codex.Category.Topic.Entry(quest.title, null, quest.description);
+        saveData.codex.categories[0].topics[0].entries = newEntries;
+
+        UIManager.Instance.ClearPreview();
+        UIManager.Instance.PreviewData(saveData);
     }
 }

@@ -6,8 +6,10 @@ using UnityEngine;
 
 public static class SaveManager
 {
-    public static string directory = "/";
-    public static string fileName = "saveData.json";
+    private static string directory = "/";
+    private static string fileName = "saveData.json";
+
+    public static string saveDirecty { get { return string.Concat(Application.persistentDataPath, directory); } }
 
     public static void Save(SaveData data)
     {
@@ -16,7 +18,7 @@ public static class SaveManager
             return;
         }
 
-        string path = string.Concat(Application.persistentDataPath, directory);
+        string path = saveDirecty;
 
         if (!Directory.Exists(path))
         {
@@ -34,7 +36,7 @@ public static class SaveManager
 
     public static SaveData Load()
     {
-        string path = string.Concat(Application.persistentDataPath, directory);
+        string path = saveDirecty;
 
         if (!Directory.Exists(path))
         {

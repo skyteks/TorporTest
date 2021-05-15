@@ -2136,6 +2136,7 @@ MonoBehaviour:
   menuButton: {fileID: 1221979546}
   questContract: {fileID: 307755549}
   noteInputField: {fileID: 1894734365}
+  addNoteScript: {fileID: 1116335864}
   levelCategoryPrefabs:
     buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
     panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
@@ -2795,7 +2796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   autoLoad: 0
-  autoSave: 0
+  autoSave: 1
   saveData:
     codex:
       categories:
@@ -2808,7 +2809,7 @@ MonoBehaviour:
             text: 'Greater Holsord is the second largest region of
 
               Sordland,
-              bordering the regions of Nargis.
+              bordering the regions of Nargis,
 
               Geisland, Bergia and
               Lorren, as well as the

@@ -12,19 +12,24 @@ public class AddNote : MonoBehaviour
 
     public void AddNewNote()
     {
-        GameObject holder = tabGroup.selectedTab.objectsToToggle[0];
+        CreateNote(inputField.text);
 
+        inputField.text = "";
+    }
+
+    public void CreateNote(string text)
+    {
+        GameObject holder = tabGroup.selectedTab.objectsToToggle[0];
         GameObject noteInstance = Instantiate(notePanelPrefab, holder.transform);
 
         Text noteText = noteInstance.transform.Find("Text Note")?.GetComponent<Text>();
+
         noteText.text = inputField.text;
 
-        inputField.text = "";
-
-        SaveNewNote(noteText.text);
+        SaveNote(text);
     }
 
-    private void SaveNewNote(string text)
+    private void SaveNote(string text)
     {
         int index = tabGroup.selectedTab.transform.GetSiblingIndex();
         GameManager.Instance.AddNote(text, index);

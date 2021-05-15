@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class QuestManager : Singleton<QuestManager>
 {
-    public List<Quest> allQuests = new List<Quest>();
+    [SerializeField]
+    private List<Quest> allQuests = new List<Quest>();
     private List<Quest> activeQuests = new List<Quest>();
 
     void OnEnable()
