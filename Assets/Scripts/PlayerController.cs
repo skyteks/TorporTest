@@ -114,7 +114,7 @@ public class PlayerController : BaseController
                 yield break;
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return Yielders.Get(0.1f);
         }
     }
 

@@ -57,9 +57,9 @@ public class NPCSpeechBubble : MonoBehaviour
         for (int i = 0; i < speech.Length; i++)
         {
             speechText.text = string.Concat(speechText.text, speech[i]);
-            yield return new WaitForSeconds(runSpeed);
+            yield return Yielders.Get(runSpeed);
         }
-        yield return new WaitForSeconds(2f);
+        yield return Yielders.Get(1f);
         onSpeechOver?.Invoke();
         StopSpeech();
     }
