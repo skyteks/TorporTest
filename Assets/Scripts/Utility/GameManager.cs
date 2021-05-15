@@ -10,9 +10,6 @@ public class GameManager : Singleton<GameManager>
     public bool autoSave;
     public SaveData saveData;
 
-    [Header("Managers")]
-    public UIManager uiManager;
-
     [Space]
     [Header("Default Fallback Info")]
     [SerializeField]
@@ -31,7 +28,7 @@ public class GameManager : Singleton<GameManager>
                 SaveDataToFile();
             }
         }
-        uiManager.PreviewData(saveData);
+        UIManager.Instance.PreviewData(saveData);
     }
 
     void OnApplicationQuit()
@@ -154,30 +151,5 @@ public class GameManager : Singleton<GameManager>
     public void SetTimeScale(float value)
     {
         Time.timeScale = value;
-    }
-
-    public void TryGivingQuest(Quest quest, UnityEngine.Events.UnityAction<bool> callback)
-    {
-        uiManager.ShowQuest(quest, callback);
-    }
-
-    public void AddAcceptedQuest(Quest quest)
-    {
-        activeQuests.Add(quest);
-
-        NPCController[] npcs = FindObjectsOfType<NPCController>();
-        foreach (var npc in npcs)
-        {
-            if (npc.questAnsweringID == quest.questAnsweringID)
-            {
-                npc.SetQuestAnswererActive(quest);
-                break;
-            }
-        }
-    }
-
-    public void RemoveFinishedQuest(Quest quest)
-    {
-        activeQuests.Remove(quest);
     }
 }

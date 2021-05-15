@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : Singleton<UIManager>
 {
     [System.Serializable]
     public struct TabLevelPrefabs
@@ -38,6 +38,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public GameObject uiPanel;
     public Button menuButton;
     public QuestContractUI questContract;
     public InputField noteInputField;
@@ -55,7 +56,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            gameObject.SetActive(false);
+            uiPanel.SetActive(false);
             menuButton.gameObject.SetActive(true);
             GameManager.Instance.SetTimeScale(1f);
         }
@@ -98,12 +99,12 @@ public class UIManager : MonoBehaviour
             }
         }
 
-        TabButton[] tabButtons = transform.GetComponentsInChildren<TabButton>(true);
+        TabButton[] tabButtons = uiPanel.GetComponentsInChildren<TabButton>(true);
         foreach (var button in tabButtons)
         {
             button.Init();
         }
-        TabGroup[] tabGroups = transform.GetComponentsInChildren<TabGroup>(true);
+        TabGroup[] tabGroups = uiPanel.GetComponentsInChildren<TabGroup>(true);
         foreach (var tab in tabGroups)
         {
             tab.ResetTabs(true);
@@ -179,7 +180,7 @@ public class UIManager : MonoBehaviour
 
     private TabLevelHolders GetHolderReferences(SaveData.Levels level, bool noButton = false)
     {
-        ChildHolderReference[] foundReferences = transform.GetComponentsInChildren<ChildHolderReference>(true);
+        ChildHolderReference[] foundReferences = uiPanel.GetComponentsInChildren<ChildHolderReference>(true);
         ChildHolderReference buttonsReference = null;
         ChildHolderReference panelsReference = null;
         for (int i = 0; i < foundReferences.Length; i++)
@@ -214,8 +215,13 @@ public class UIManager : MonoBehaviour
         return new TabLevelHolders(buttonsReference, panelsReference);
     }
 
-    public void ShowQuest(Quest quest, UnityEngine.Events.UnityAction<bool> callback)
+    public void ShowQuest(uint questID)
     {
-        questContract.Show(quest, callback);
+        questContract.Show(questID);
+    }
+
+    public bool IsAnyUIWindowActive()
+    {
+        return uiPanel.activeSelf || questContract.gameObject.activeSelf;
     }
 }

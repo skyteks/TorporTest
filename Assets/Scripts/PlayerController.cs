@@ -34,9 +34,19 @@ public class PlayerController : BaseController
         camera = Camera.main;
     }
 
+    void OnEnable()
+    {
+        EventManager.Instance.AddListener<GameEvent.QuestCompleted>(OnQuestCompleted);
+    }
+
+    void OnDisable()
+    {
+        EventManager.Instance.RemoveListener<GameEvent.QuestCompleted>(OnQuestCompleted);
+    }
+
     void Update()
     {
-        if (!GameManager.Instance.uiManager.gameObject.activeSelf && EventSystem.current.currentSelectedGameObject == null)
+        if (EventSystem.current.currentSelectedGameObject == null)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -115,5 +125,10 @@ public class PlayerController : BaseController
 
         npc.Interacting(this);
         interactingWith = npc;
+    }
+
+    private void OnQuestCompleted(GameEvent.QuestCompleted e)
+    {
+        animation.DoWinAnimation();
     }
 }

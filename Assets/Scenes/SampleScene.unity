@@ -966,7 +966,6 @@ GameObject:
   - component: {fileID: 328685635}
   - component: {fileID: 328685634}
   - component: {fileID: 328685636}
-  - component: {fileID: 328685637}
   m_Layer: 5
   m_Name: Panel Window
   m_TagString: Untagged
@@ -1059,36 +1058,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &328685637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328685632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a464b1d0c95ee9d459caf7ed8341e186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuButton: {fileID: 1221979546}
-  questContract: {fileID: 307755549}
-  noteInputField: {fileID: 1894734365}
-  levelCategoryPrefabs:
-    buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
-    panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
-  levelTopicPrefabs:
-    buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
-    panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
-  levelEntryPrefabs:
-    buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
-    panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
-  levelActPrefabs:
-    buttonPrefab: {fileID: 1215076350371478653, guid: d1f66d3ca1a40e24187b8d154a0e48c4, type: 3}
-    panelPrefab: {fileID: 3065363199674766596, guid: e88e51a26145bf147bad3a7673bf96f9, type: 3}
-  levelNotePrefabs:
-    buttonPrefab: {fileID: 0}
-    panelPrefab: {fileID: 1155940735901452660, guid: 9ce3746fe651eff479de06bd6f24378a, type: 3}
 --- !u!1001 &336069099
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2059,6 +2028,7 @@ GameObject:
   - component: {fileID: 682864941}
   - component: {fileID: 682864940}
   - component: {fileID: 682864939}
+  - component: {fileID: 682864943}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2149,6 +2119,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &682864943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682864938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a464b1d0c95ee9d459caf7ed8341e186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPanel: {fileID: 328685632}
+  menuButton: {fileID: 1221979546}
+  questContract: {fileID: 307755549}
+  noteInputField: {fileID: 1894734365}
+  levelCategoryPrefabs:
+    buttonPrefab: {fileID: 7138567361225278688, guid: 53b303128995fab46927f2cbbcb4abab, type: 3}
+    panelPrefab: {fileID: 9074131565063360377, guid: 92c0d9a0cc32ee140a9ad9d09c85be14, type: 3}
+  levelTopicPrefabs:
+    buttonPrefab: {fileID: 7446216532346751974, guid: 2e018f4b23469884da2a56507854575f, type: 3}
+    panelPrefab: {fileID: 4234791629645534606, guid: 2cc6785dca969fe4597b2d6bfacc63e6, type: 3}
+  levelEntryPrefabs:
+    buttonPrefab: {fileID: 3495800364500146588, guid: 1ed96816a62386d44a4cf3d1a3e86f53, type: 3}
+    panelPrefab: {fileID: 8795286022309324430, guid: a6450f715df86e74cb94ce9e966554b7, type: 3}
+  levelActPrefabs:
+    buttonPrefab: {fileID: 1215076350371478653, guid: d1f66d3ca1a40e24187b8d154a0e48c4, type: 3}
+    panelPrefab: {fileID: 3065363199674766596, guid: e88e51a26145bf147bad3a7673bf96f9, type: 3}
+  levelNotePrefabs:
+    buttonPrefab: {fileID: 0}
+    panelPrefab: {fileID: 1155940735901452660, guid: 9ce3746fe651eff479de06bd6f24378a, type: 3}
 --- !u!1001 &686563873
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2772,6 +2773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 923419752}
   - component: {fileID: 923419751}
+  - component: {fileID: 923419753}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2875,7 +2877,6 @@ MonoBehaviour:
         notes: []
       act4:
         notes: []
-  uiManager: {fileID: 328685637}
   entry1A1Image: {fileID: 21300000, guid: d15af4914faf86549b4add6a8badf7a8, type: 3}
 --- !u!4 &923419752
 Transform:
@@ -2891,6 +2892,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &923419753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923419750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e73b7082cc31d94689e06282993fdb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allQuests:
+  - {fileID: 11400000, guid: a894bbe0ef609db4cb82db72ab719326, type: 2}
 --- !u!1001 &934661188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2914,6 +2929,10 @@ PrefabInstance:
       propertyPath: quest
       value: 
       objectReference: {fileID: 11400000, guid: a894bbe0ef609db4cb82db72ab719326, type: 2}
+    - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+      propertyPath: questID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3573829660496238130, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.35
@@ -6782,6 +6801,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7596758016583214427, guid: a07cba706c73eed4abf9bc6e413cfe9d, type: 3}
   m_PrefabInstance: {fileID: 2071646758}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2137704810 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3573829660496238131, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
+  m_PrefabInstance: {fileID: 978844197}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2137704811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137704810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bd75cca3510fff48bdaff38ffbfd82e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questID: 1
 --- !u!1001 &5576705551253938713
 PrefabInstance:
   m_ObjectHideFlags: 0

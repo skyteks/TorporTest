@@ -41,9 +41,8 @@ public class NPCController : BaseController
 
     [Header("Quest Giving Behavior")]
     public GameObject questionmarkSymbol;
-    public Quest quest;
-    public uint questAnsweringID;
-    private Quest answeringToQuest;
+    public uint questID;
+    private QuestObjective questObjective;
 
 #if UNITY_EDITOR
     [Header("Editor")]
@@ -55,6 +54,7 @@ public class NPCController : BaseController
     {
         base.Awake();
         speechBubble = GetComponent<NPCSpeechBubble>();
+        questObjective = GetComponent<QuestObjective>();
     }
 
     void Start()
@@ -155,7 +155,7 @@ public class NPCController : BaseController
         }
     }
 
-    private void SetStateColor()
+    public void SetStateColor()
     {
         Color newColor;
         switch (state)
@@ -175,7 +175,7 @@ public class NPCController : BaseController
             default:
                 throw new ArgumentException();
         }
-        if (answeringToQuest != null)
+        if (questObjective != null && questObjective.isActiveObstacle)
         {
             newColor = questAnsweringColor;
         }
@@ -245,18 +245,22 @@ public class NPCController : BaseController
         ArrivalSubscribeToggle(false);
         SpokenSubscibeToggle(false);
 
-        if (answeringToQuest != null && answeringToQuest is InteractQuest)
+        if (questObjective != null && questObjective.isActiveObstacle)
         {
-            speechBubble.onSpeechOver.AddListener(OnFinishedQuest);
-            speechBubble.DoSpeech((answeringToQuest as InteractQuest).rewardingReaction);
-            return;
+            Quest quest = QuestManager.Instance.GetActiveQuestWithID(questObjective.questID);
+            if (quest != null)
+            {
+                speechBubble.onSpeechOver.AddListener(OnFinishedReviewingQuest);
+                if (quest is InteractQuest)
+                {
+                    speechBubble.DoSpeech((quest as InteractQuest).rewardingReaction);
+                }
+                return;
+            }
         }
         else if (state == NPCStates.GivingQuests)
         {
-            if (quest == null)
-            {
-                throw new UnassignedReferenceException("NPC doesn't have a quest");
-            }
+            Quest quest = QuestManager.Instance.GetQuestWithID(questID);
             if (quest.giveQuestDirectly)
             {
                 TryGivingQuestToPlayer();
@@ -323,11 +327,18 @@ public class NPCController : BaseController
     private void TryGivingQuestToPlayer()
     {
         speechBubble.onSpeechOver.RemoveListener(TryGivingQuestToPlayer);
-        GameManager.Instance.TryGivingQuest(quest, OnQuestAcceptedOrDeclined);
+        EventManager.Instance.AddListener<GameEvent.QuestAccepted>(OnQuestAcceptedOrDeclined);
+        QuestManager.Instance.TryGivingQuest(questID);
     }
 
-    private void OnQuestAcceptedOrDeclined(bool accepted)
+    private void OnQuestAcceptedOrDeclined(GameEvent.QuestAccepted e)
     {
+        if (e.questID != questID)
+        {
+            return;
+        }
+        EventManager.Instance.RemoveListener<GameEvent.QuestAccepted>(OnQuestAcceptedOrDeclined);
+
         StopTalking();
 
         SwitchInteracting(true);
@@ -335,24 +346,19 @@ public class NPCController : BaseController
         //movement.Stop();
         //movement.RotateTowards(player.transform.position);
 
-        speechBubble.DoSpeech(accepted ? quest.acceptedReaction : quest.declinedReaction);
+        Quest quest = QuestManager.Instance.GetQuestWithID(questID);
 
-        if (accepted)
+        speechBubble.DoSpeech(e.accepted ? quest.acceptedReaction : quest.declinedReaction);
+
+        if (e.accepted)
         {
-            GameManager.Instance.AddAcceptedQuest(quest);
             SwitchState(NPCStates.None);
         }
     }
 
-    public void SetQuestAnswererActive(Quest answerToQuest)
+    private void OnFinishedReviewingQuest()
     {
-        answeringToQuest = answerToQuest;
-        SetStateColor();
-    }
-
-    private void OnFinishedQuest()
-    {
-        GameManager.Instance.RemoveFinishedQuest(answeringToQuest);
-        SetQuestAnswererActive(null);
+        GameEvent.QuestCompleted e = new GameEvent.QuestCompleted(questObjective.questID);
+        EventManager.Instance.Trigger(e);
     }
 }

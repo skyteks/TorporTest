@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -67,6 +68,11 @@ public class CharacterAnimation : MonoBehaviour
                 UnityEditor.Handles.DrawSolidArc(transform.position, Vector3.up, transform.forward, angle, 2f);
             }
         }
+    }
+
+    public void DoWinAnimation()
+    {
+        anim.SetTrigger(hashWin);
     }
 #endif
 }

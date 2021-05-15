@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bf9ace2f9186c849b4d32ff0bb0e219, type: 3}
   m_Name: Test Quest
   m_EditorClassIdentifier: 
-  title: 
+  ID: 1
+  progress: 0
+  title: Old Friend on the other side
   description: Go to this guy's friend and tell him his buddy here is still alive.
   priorContractReaction: 'Hi there boy,
 
@@ -22,5 +24,9 @@ MonoBehaviour:
   declinedReaction: 'Fine, then not.
 
     Screw you!'
-  questAnsweringID: 111
-  rewardingReaction: 
+  rewardingReaction: 'That idiot still thinks I''m his friend.
+
+    Pah...
+
+    Leave
+    me alone!'

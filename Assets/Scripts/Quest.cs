@@ -4,6 +4,16 @@ using UnityEngine;
 
 public abstract class Quest : ScriptableObject
 {
+    public enum Progress
+    {
+        Hidden,
+        Active,
+        Completed,
+    }
+
+    public uint ID;
+    public Progress progress;
+
     public string title;
     [TextArea]
     public string description;
@@ -16,7 +26,4 @@ public abstract class Quest : ScriptableObject
     public string acceptedReaction;
     [TextArea]
     public string declinedReaction;
-
-    [Header("Quest Replier")]
-    public uint questAnsweringID;
 }

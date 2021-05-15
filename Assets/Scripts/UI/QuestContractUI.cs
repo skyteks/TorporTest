@@ -14,14 +14,12 @@ public class QuestContractUI : MonoBehaviour
     public bool upperTitle;
 
     private Quest currentQuest;
-    UnityEngine.Events.UnityAction<bool> contractReactionCallback;
 
-    public void Show(Quest quest, UnityEngine.Events.UnityAction<bool> callback)
+    public void Show(uint questID)
     {
-        currentQuest = quest;
-        contractReactionCallback = callback;
-        titleText.text = upperTitle ? quest.title.ToUpper() : quest.title;
-        descriptionText.text = quest.description;
+        currentQuest = QuestManager.Instance.GetQuestWithID(questID);
+        titleText.text = upperTitle ? currentQuest.title.ToUpper() : currentQuest.title;
+        descriptionText.text = currentQuest.description;
 
         gameObject.SetActive(true);
     }
@@ -29,9 +27,9 @@ public class QuestContractUI : MonoBehaviour
     public void QuestContractReaction(bool accepted)
     {
         Clear();
-        contractReactionCallback.Invoke(accepted);
+        GameEvent.QuestAccepted e = new GameEvent.QuestAccepted(currentQuest.ID, accepted);
+        EventManager.Instance.Trigger(e);
         currentQuest = null;
-        contractReactionCallback = null;
     }
 
     private void Clear()
