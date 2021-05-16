@@ -45,6 +45,7 @@ public class NPCSpeechBubble : MonoBehaviour
 
     public void DoSpeech(string speech)
     {
+        StopSpeech();
         runSpeech = StartCoroutine(RunSpeechSlowly(speech, speed));
     }
 
@@ -69,10 +70,10 @@ public class NPCSpeechBubble : MonoBehaviour
         if (runSpeech != null)
         {
             StopCoroutine(runSpeech);
+            runSpeech = null;
         }
         speechText.text = "";
         bubbleActive = false;
         UpdateBubbleVisibility();
-        runSpeech = null;
     }
 }

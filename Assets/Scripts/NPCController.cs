@@ -318,6 +318,11 @@ public class NPCController : BaseController
 
     public void StopTalking()
     {
+        if (questObjective != null && questObjective.isActiveObstacle)
+        {
+            speechBubble.onSpeechOver.RemoveListener(OnFinishedReviewingQuest);
+        }
+
         speechBubble.StopSpeech();
     }
 
