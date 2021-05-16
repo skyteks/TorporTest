@@ -69,10 +69,10 @@ public class CharacterAnimation : MonoBehaviour
             }
         }
     }
+#endif
 
     public void DoWinAnimation()
     {
         anim.SetTrigger(hashWin);
     }
-#endif
 }

@@ -10,7 +10,6 @@ public delegate void EventDelegate<T>(T e) where T : GameEvent;
 /// <summary>
 /// Delegate Event handler
 /// </summary>
-[CreateAssetMenu]
 public class EventManager : SOSingleton<EventManager>
 {
     private delegate void EventDelegate(GameEvent e);

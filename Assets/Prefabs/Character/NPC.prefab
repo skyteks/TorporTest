@@ -42,8 +42,8 @@ MonoBehaviour:
   talkingSpeeches: []
   questionmarkSymbol: {fileID: 7225791524316907296}
   questID: 0
-  drawWalkingCircle: 0
-  drawOtherWalkingPoints: 1
+  drawWalkingCircle: 1
+  drawOtherWalkingPoints: 0
 --- !u!114 &1886974073884444249
 MonoBehaviour:
   m_ObjectHideFlags: 0
