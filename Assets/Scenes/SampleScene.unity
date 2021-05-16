@@ -4410,7 +4410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc6e2fa09a9f9e4c93ab59e88e56232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoLoad: 0
+  autoLoad: 1
   autoSave: 1
   saveData:
     codex:
