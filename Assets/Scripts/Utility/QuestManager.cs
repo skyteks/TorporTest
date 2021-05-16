@@ -19,16 +19,20 @@ public class QuestManager : Singleton<QuestManager>
         EventManager.Instance.RemoveListener<GameEvent.QuestAccepted>(OnQuestAccepted);
     }
 
-    private void OnQuestAccepted(GameEvent.QuestAccepted questAcceptedEvent)
+    private void OnQuestAccepted(GameEvent.QuestAccepted e)
     {
-        Quest quest = GetQuestWithID(questAcceptedEvent.questID);
+        if (!e.accepted)
+        {
+            return;
+        }
+        Quest quest = GetQuestWithID(e.questID);
         quest.progress = Quest.Progress.Active;
         activeQuests.Add(quest);
     }
 
-    private void OnQuestCompleted(GameEvent.QuestCompleted questCompletedEvent)
+    private void OnQuestCompleted(GameEvent.QuestCompleted e)
     {
-        Quest quest = GetActiveQuestWithID(questCompletedEvent.questID);
+        Quest quest = GetActiveQuestWithID(e.questID);
         quest.progress = Quest.Progress.Completed;
         activeQuests.Remove(quest);
     }

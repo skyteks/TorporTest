@@ -22,6 +22,10 @@ public class QuestlogUI : MonoBehaviour
 
     private void OnQuestAccepted(GameEvent.QuestAccepted e)
     {
+        if (!e.accepted)
+        {
+            return;
+        }
         QuestlogEntryUI logEntry = null;
         foreach (QuestlogEntryUI entry in entries)
         {
