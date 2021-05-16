@@ -287,6 +287,18 @@ public class NPCController : BaseController
         {
             movement.RotateTowards(transform.position + priorInteractionFacing);
         }
+
+        if (state == NPCStates.Talking)
+        {
+            if (talkingFirst)
+            {
+                TalkAgainToPartner();
+            }
+            else
+            {
+                talkingPartner.TalkAgainToPartner();
+            }
+        }
     }
 
     public void TalkAgainToPartner()
