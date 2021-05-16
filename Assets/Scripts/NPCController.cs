@@ -370,6 +370,7 @@ public class NPCController : BaseController
 
     private void OnFinishedReviewingQuest()
     {
+        speechBubble.onSpeechOver.RemoveListener(OnFinishedReviewingQuest);
         GameEvent.QuestCompleted e = new GameEvent.QuestCompleted(questObjective.questID);
         EventManager.Instance.Trigger(e);
     }
