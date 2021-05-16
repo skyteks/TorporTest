@@ -9999,7 +9999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: talkingSpeeches.Array.data[4]
-      value: Fuck you!
+      value: Screw you!
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: talkingSpeeches.Array.data[5]
@@ -10986,7 +10986,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: talkingSpeeches.Array.data[4]
-      value: No Fuck you!
+      value: No screw you!
       objectReference: {fileID: 0}
     - target: {fileID: 540284081, guid: d76f087e1aa6a73478eca9829a56f995, type: 3}
       propertyPath: talkingSpeeches.Array.data[5]
