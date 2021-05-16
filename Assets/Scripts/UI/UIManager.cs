@@ -43,6 +43,7 @@ public class UIManager : Singleton<UIManager>
     public QuestContractUI questContract;
     public InputField noteInputField;
     public AddNote addNoteScript;
+    public QuestlogUI questlog;
 
     [Space]
     [Header("Prefabs")]
@@ -59,10 +60,16 @@ public class UIManager : Singleton<UIManager>
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            uiPanel.SetActive(false);
-            menuButton.gameObject.SetActive(true);
-            GameManager.Instance.SetTimeScale(1f);
+            ToggleUI(!uiPanel.activeSelf);
         }
+    }
+
+    public void ToggleUI(bool toggle)
+    {
+        uiPanel.SetActive(toggle);
+        menuButton.gameObject.SetActive(!toggle);
+        questlog.gameObject.SetActive(!toggle);
+        GameManager.Instance.SetTimeScale(toggle ? 0f : 1f);
     }
 
     public void ClearPreview()
